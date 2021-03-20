@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} {{name_lang}} {% endblock %}
+{% block content %}
+<main class="languages-main">
+    <div class="container">
+        <div class="languages-main__text">
+            <h1>{{lang.name_language}}</h1>
+            <p>{{lang.description_language}}</p>
+        </div>
+    </div>
+    {% for part in lang.part_list %}
+        <div class="languages-main__chapters">
+            <h1 class="languages-main__title">{{part.name_part}}</h1>
+            <div class="container">
+                <div class="languages-main__items grid">
+                    {% for chapter in part.chapter_list %}
+                            <a class="languages-main__item unreaded" href=" {{url_for('getPart', language=lang.name_language, name_part=part.name_part, number_chapter=loop.index)}} ">{{ chapter.name_chapter }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</main>
+{% endblock %}

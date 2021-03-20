@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %} <h1>Registration</h1> {% endblock %}
+{% block content %}
+<main class="signup-main grid">
+    <form action="#" method="POST" class="user-form">
+        {{ form.hidden_tag() }}
+        <div class="container">
+            <div class="signup-main__block grid">
+                <h1 class="signup-main__text">РЕГИСТРАЦИЯ</h1>
+                {{ form.csrf_token }}
+                {% if form.email.errors %}
+                    <p class="signup-main__message bg-red">Invalid Email</p>
+                {% endif %}
+                {{ form.email(class='signup-main__email', placeholder="Email") }}
+                {% if form.username.errors %}
+                    <p class="signup-main__message bg-red">This nickname is found</p>
+                {% endif %}
+                {{ form.username(class='signup-main__login', placeholder="Никнейм") }}
+                {% if form.password.errors %}
+                    <p class="signup-main__message bg-red">Invalid password</p>
+                {% endif %}
+                {{ form.password(class='signup-main__password', placeholder="Пароль") }}
+                {{ form.submit(class='signup-main__btn') }}
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} {{lang.name_language}} - {{part.name_part}} {% endblock %}
+{% block content %}
+<main class="chapter-main">
+    <div class="container chapter-main__container grid">
+        <div class="chapter-main-sidebar">
+            <h3 class="chapter-main-sidebar__title">{{part.name_part}}</h3>
+            <ul class="chapter-main-sidebar__list">
+                {% for chapter in part.chapter_list %}
+                    <li class="chapter-main-sidebar__list-item"><a class="chapter-main-sidebar__list-link unreaded" href="{{url_for('getPart', language=lang.name_language, name_part=part.name_part, number_chapter=loop.index)}}">- {{chapter.name_chapter}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="chapter-main-content">
+            <h1 class="chapter-main-content__title">{{chapter.name_chapter}}</h1>
+            {{chapter.text_chapter | safe}}
+        </div>
+    </div>
+</main>
+{% endblock %}
