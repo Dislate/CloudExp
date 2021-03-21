@@ -24,7 +24,7 @@ class languages(db.Model):
     __tablename__ = 'languages'
     id_language = db.Column(db.Integer, primary_key=True)
     name_language = db.Column(db.String(40), unique=True)
-    description_language = db.Column(db.String(300))
+    description_language = db.Column(db.String(1500))
     part_list = db.relationship('parts', backref='languages', passive_deletes=True, lazy='dynamic')
     
     def __init__(self, name_language, description_language):
@@ -46,18 +46,27 @@ class chapters(db.Model):
     __tablename__ = 'chapters'
     id_chapter = db.Column(db.Integer, primary_key=True)
     part_id = db.Column(db.Integer, db.ForeignKey('parts.id_part', ondelete="CASCADE"))
-    name_chapter = db.Column(db.String(30))
-    text_chapter = db.Column(db.String(2000))
-    part = db.relationship('parts', backref='chapters')
+    name_chapter = db.Column(db.String(50))
+    text_chapter = db.Column(db.String(5000))
+    task_list = db.relationship('tasks', backref='chapters', passive_deletes=True, lazy='dynamic')
 
     def __init__(self, part_id, name_chapter, text_chapter):
         self.part_id = part_id
         self.name_chapter = name_chapter
         self.text_chapter = text_chapter
     
-# class task(db.Model):
-#     _id_task = db.Column('id_task', db.Integer, primary_key=True)
-#     chapter = db.Column(db.String(30))
-#     text_task = db.Column(db.String(200))
-#     solution = db.Column(db.String(300))
-#     hint = db.Column(db.String(100))
+class tasks(db.Model):
+    id_task = db.Column('id_task', db.Integer, primary_key=True)
+    chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id_chapter', ondelete='CASCADE'))
+    name_task = db.Column(db.String(100))
+    text_task = db.Column(db.String(1000))
+    solution = db.Column(db.String(500))
+    hint = db.Column(db.String(500))
+    chapter = db.relationship('chapters', backref='task')
+
+    def __init__(self, chapter_id, name_task, text_task, solution, hint):
+        self.chapter_id = chapter_id
+        self.name_task = name_task
+        self.text_task = text_task
+        self.solution = solution
+        self.hint = hint

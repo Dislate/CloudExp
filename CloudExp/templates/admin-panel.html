@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} Админка {% endblock %}
+{% block title %} {{name_page}} {% endblock %}
 {% block content %}
     <main class="admin-panel-main">
         <div class="container admin-panel-main__container grid">
@@ -14,7 +14,7 @@
                                         <button class="admin-panel-main__button">{{part.name_part}}</button>
                                         <ul class="admin-panel-main__chapters hidden">
                                             {% for chapter in part.chapter_list %}
-                                                <li class="admin-panel-main__chapter"><button class="admin-panel-main__button"><a href="/admin-panel?data-input-chapter={{chapter.id_chapter}}">{{chapter.name_chapter}}</a></button></li>
+                                                <li class="admin-panel-main__chapter"><button class="admin-panel-main__button"><a href="/admin-panel?data_input_chapter={{chapter.id_chapter}}">{{chapter.name_chapter}}</a></button></li>
                                             {% endfor %}
                                             <li class="admin-panel-main__chapter">
                                                 <form action="/admin-panel?data-id-part={{part.id_part}}" method="POST" class="adding">
@@ -42,24 +42,32 @@
             </div>
             <div class="admin-panel-main__col grid">
                 <form class="admin-panel-main__col grid" action="#" method="POST">
-                    <textarea id="admin-panel-main__text-chapter" name='text_chapter'>{{obj_chapter | safe}}</textarea>
-                    <p class="admin-panel-main__tasks-title">Задачи</p>
-                    <div class="admin-panel-main__tasks-buttons">
-                        <button class="admin-panel-main__tasks-btn active-task">#1</button>
-                        <button class="admin-panel-main__tasks-btn">#2</button>
-                        <button class="admin-panel-main__tasks-btn">#3</button>
-                        <button class="admin-panel-main__tasks-add-btn">+</button>
-                    </div>
-                    <p class="admin-panel-main__name-task">Название задачи</p>
-                    <input class="admin-panel-main__input-task" type="text" />
-                    <p class="admin-panel-main__condition-task">Условия задачи</p>
-                    <input class="admin-panel-main__input-task" type="text" />
-                    <p class="admin-panel-main__hint-task">Подсказка</p>
-                    <input class="admin-panel-main__input-task" type="text" />
-                    <p class="admin-panel-main__solution-task">Решение</p>
-                    <input class="admin-panel-main__input-task" type="text" />
-                    <button class="admin-panel-main__add-task-btn" data-element="add-task-btn">+ Добавить задачу</button>
-                    <button class="admin-panel-main__create-chapter" data-element="create-chapter">Обновить</button>
+                    <textarea id="admin-panel-main__text-chapter" name='text_chapter'>{{obj_chapter.text_chapter | safe}}</textarea>
+                    <h2 class="admin-panel-main__tasks-title">Задачи</h2>
+                    {% if obj_chapter.task_list %}
+                        {% for task in obj_chapter.task_list %}
+                            <div class="admin-panel-main__task">
+                                <div class="admin-panel-main__task-item">
+                                    <h3 class="admin-panel-main__name-task">Название задачи #{{loop.index}}</h3>
+                                    <input class="admin-panel-main__input-task" type="text" name='name_task_{{loop.index}}' value='{{ task.name_task}}' />
+                                </div>
+                                <div class="admin-panel-main__task-item">
+                                    <p class="admin-panel-main__condition-task">Условия задачи</p>
+                                    <textarea class="admin-panel-main__input-task" type="text" name='text_task_{{loop.index}}'>{{task.text_task}}</textarea>
+                                </div>
+                                <div class="admin-panel-main__task-item">
+                                    <p class="admin-panel-main__solution-task">Решение</p>
+                                    <textarea class="admin-panel-main__input-task" type="text" name='solution_task_{{loop.index}}'>{{task.solution}}</textarea>
+                                </div>
+                                <div class="admin-panel-main__task-item">
+                                    <p class="admin-panel-main__hint-task">Подсказка</p>
+                                    <textarea class="admin-panel-main__input-task" type="text" name='hint_task_{{loop.index}}'>{{task.hint}}</textarea>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif%}
+                    <button class='admin-panel-main__add-task-btn'><a href="/admin-panel?data-task-chapter={{obj_chapter.id_chapter}}">+ Добавить задачу</a></button>
+                    <button class="admin-panel-main__create-chapter">Обновить</button>
                 </form>
             </div>
             <div id='btns-cont' class="admin-panel-main__col">

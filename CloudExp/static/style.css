@@ -328,6 +328,10 @@ header {
     font-weight: 700
 }
 
+.logo img {
+    width: 25px;
+}
+
 .title {
     font-family: NunitoSemiBold, sans-serif;
     font-weight: 600;
@@ -563,7 +567,8 @@ input {
     font-size: 3rem;
     font-family: NunitoSemiBold, sans-serif;
     font-weight: 600;
-    line-height: 130%
+    line-height: 130%;
+    margin: 0 0 0.625rem 0;
 }
 
 @media only screen and (max-width:1024px) {
@@ -606,7 +611,7 @@ input {
 }
 
 .landing-main__text {
-    grid-template-columns: 64.912280702%;
+    grid-template-columns: 70%;
     justify-content: center
 }
 
@@ -919,13 +924,26 @@ input {
     border-bottom: 2px solid #F6F4FC;
 }
 
-.admin-panel-main__button {
+.admin-panel-main__language .admin-panel-main__button {
     background-color: #ffffff;
     color: #192457;
+    font-size: 1.25rem;
+}
+
+.admin-panel-main__part .admin-panel-main__button {
+    background-color: #ffffff;
+    color: #192457;
+    font-size: 1.125rem;
+}
+
+.admin-panel-main__chapter .admin-panel-main__button {
+    background-color: #ffffff;
+    color: #192457;
+    font-size: 1rem;
 }
 
 .admin-panel-main__create-chapter {
-    font-family: NunitoBold;
+    font-family: NunitoBold, sans-serif;
 }
 
 .admin-panel-main__container {
@@ -951,9 +969,9 @@ input {
 }
 
 .admin-panel-main__part {
-    font-family: NunitoSemiBold, sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
+    font-family: NunitoBold, sans-serif;
+    font-weight: 700;
+    font-size: 1.125rem;
     margin: 15px 0
 }
 
@@ -963,9 +981,9 @@ input {
 }
 
 .admin-panel-main__chapter {
-    font-family: NunitoRegular, sans-serif;
-    font-weight: 400;
-    font-size: .875rem;
+    font-family: NunitoBoldRegular, sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
     margin: 10px 0
 }
 
@@ -1000,19 +1018,20 @@ input {
     text-align: start
 }
 
+.admin-panel-main__add-task-btn {
+    background-color: inherit;
+    color: #192457;
+    text-align: start;
+    margin-top: 5px;
+    font-family: NunitoBold, sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 .admin-panel-main__input-task {
     height: 34px;
     background-color: #f6f4fc;
     border-radius: 4px
-}
-
-.admin-panel-main__add-task-btn {
-    background-color: inherit;
-    text-align: start;
-    margin-top: 15px;
-    font-family: NunitoBold, sans-serif;
-    font-weight: 700;
-    cursor: pointer
 }
 
 .admin-panel-main__create-chapter {
@@ -1026,23 +1045,45 @@ input {
     cursor: pointer
 }
 
-.admin-panel-main__tasks-add-btn,
-.admin-panel-main__tasks-btn {
-    border-radius: 36px;
-    margin-right: 11px;
-    width: 40px;
-    height: 40px;
-    font-size: .75rem;
-    cursor: pointer
+.admin-panel-main__task input {
+    padding-left: 5px;
+    width: 100%;
 }
 
-.admin-panel-main__tasks-btn {
-    background-color: #f6f4fc
+.admin-panel-main__task {
+    padding-bottom: 10px;
 }
 
-.admin-panel-main__tasks-add-btn {
-    background-color: #4160ef;
-    color: #fff
+.admin-panel-main__task-item textarea {
+    box-sizing: border-box;
+    min-height: 40px;
+    width: 100%;
+    background-color: #f6f4fc;
+    padding: 8px 5px;
+    border-radius: 4px;
+    border: none;
+    resize: vertical;
+    outline: 0
+}
+
+.admin-panel-main__task-item:nth-child(3) textarea {
+    min-height: 100px;
+}
+
+.admin-panel-main__tasks-title {
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.admin-panel-main__name-task {
+    font-size: 1.125rem;
+    padding: 10px 0 10px 0;
+    border-top: solid 2px #f5f5f5;
+}
+
+.admin-panel-main__task-item h3 {
+    margin: 0;
 }
 
 #admin-panel-main__text-chapter {
@@ -1263,7 +1304,8 @@ pre {
     white-space: pre-wrap
 }
 
-.adding .admin-panel-main__btn{
+.admin-panel-main__btn{
     background: none;
     color: #192457;
+
 }

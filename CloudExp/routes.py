@@ -1,6 +1,6 @@
 from flask import redirect, url_for, render_template, request, session, flash
 from CloudExp import app, db, bcrypt
-from CloudExp.models import users, languages, parts, chapters
+from CloudExp.models import users, languages, parts, chapters, tasks
 from CloudExp.forms import RegistrationForm, LoginForm
 from flask_login import login_user, current_user, logout_user
 
@@ -13,7 +13,7 @@ def inject_languages():
 def home():
     return render_template("index.html")
 
-@app.route('/admin-panel', methods=['GET', 'POST'])
+@app.route('/admin-panel', methods=['GET', 'POST', 'PUT'])
 def admin_panel():
     if request.method == 'POST':
         
@@ -52,25 +52,32 @@ def admin_panel():
         except:
             pass
         else:
-            request_chapter = request.args.get('data-input-chapter')
+            request_chapter = request.args.get('data_input_chapter')
             if request_chapter:
                 chapters.query.filter_by(id_chapter=request_chapter).update({"text_chapter": text_chapter})
             else:
                 chapters.query.first().text_chapter = text_chapter
             db.session.commit()
-            return redirect(url_for('admin_panel'))
+            return redirect(url_for('admin_panel', data_input_chapter=request_chapter))
     
+    if request.args.get('data-task-chapter'):
+        chapterForTask = request.args.get('data-task-chapter')
+        newTask = tasks(int(chapterForTask), '', '', '', '')
+        db.session.add(newTask)
+        db.session.commit()
+        return redirect(url_for('admin_panel', data_input_chapter=chapterForTask))
+
     if current_user.is_authenticated:
         if current_user.privilages == 'is_admin':
             if languages.query.first() and parts.query.first() and chapters.query.first():
-                data = request.args.get('data-input-chapter')
+                data = request.args.get('data_input_chapter')
                 if data:
                     obj_chapter = chapters.query.filter_by(id_chapter=data).first()
                 else:
                     obj_chapter = languages.query.first().part_list.first().chapter_list.first()
-                return render_template('admin-panel.html', langs=languages.query.all(), obj_chapter=obj_chapter.text_chapter)
+                return render_template('admin-panel.html', langs=languages.query.all(), obj_chapter=obj_chapter, name_page='Админ-панель')
             else:
-                return render_template('admin-panel.html', langs=languages.query.all(), obj_chapter='')
+                return render_template('admin-panel.html', langs=languages.query.all(), obj_chapter='', name_page='Админ-панель')
         else:
             return redirect(url_for('home'))
     else:
@@ -81,7 +88,7 @@ def admin_panel():
 def getLanguage(language):
     obj_language = languages.query.filter_by(name_language=language).first()
     if obj_language:
-        return render_template('language.html', lang=obj_language)
+        return render_template('language.html', lang=obj_language, name_page=obj_language.name_language)
     else:
         return redirect(url_for('home'))
 
@@ -96,7 +103,7 @@ def getPart(language, name_part, number_chapter):
         db.session.commit()
 
     if obj_lang and name_part:
-        return render_template('part.html', lang=obj_lang, part=obj_part, chapter=number_chapter)
+        return render_template('part.html', lang=obj_lang, part=obj_part, chapter=number_chapter, name_page=obj_lang.name_language + ' - ' + number_chapter.name_chapter)
     else:
         return redirect(url_for('home'))
 
@@ -116,7 +123,7 @@ def signin():
             flash("Данные не верны")
             return redirect(url_for("signin"))
 
-    return render_template('signin.html', form=form)
+    return render_template('signin.html', form=form, name_page='Вход')
 
 
 @app.route('/signup', methods=["POST", "GET"])
@@ -134,7 +141,7 @@ def signup():
             db.session.add(user)
             db.session.commit()
         return redirect(url_for("home"))
-    return render_template("signup.html", form=form)
+    return render_template("signup.html", form=form, name_page='Регистрация')
 
 
 @app.route("/logout")

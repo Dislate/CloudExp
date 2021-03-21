@@ -22,7 +22,7 @@
                 {% endif%}
                 <li><a href=" {{url_for('logout')}} ">Log Out</a></li>
             {% else %}
-                {% for i in [[url_for('signup'), "Sign Up"], [url_for('signin'), "Sign In"]] %}
+                {% for i in [[url_for('signup'), "Регистрация"], [url_for('signin'), "Вход"]] %}
                 <li><a href="{{i[0]}}">{{i[1]}}</a></li>
                 {% endfor %}
             {% endif %}
@@ -31,7 +31,9 @@
     <header class="landing-header">
         <div class="top-line">
         <div class="container top-line__container grid">
-            <div class="logo"><a href=" {{url_for('home')}} ">CloudExp</a></div>
+            <div class="logo">
+                <img src="{{url_for('static', filename='img/Logo.svg')}}" alt="CloudExp">
+                <a href=" {{url_for('home')}} ">CloudExp</a></div>
             <nav class="top-line__nav">
             <ul>
                 {% for lang in languages_list %}
@@ -46,7 +48,7 @@
                     {% endif%}
                     <li><a href=" {{url_for('logout')}} ">Log Out</a></li>
                 {% else %}
-                    {% for i in [[url_for('signup'), "Sign Up"], [url_for('signin'), "Sign In"]] %}
+                    {% for i in [[url_for('signup'), "Регистрация"], [url_for('signin'), "Вход"]] %}
                     <li><a href="{{i[0]}}">{{i[1]}}</a></li>
                     {% endfor %}
                 {% endif %}
@@ -57,18 +59,18 @@
     <div class="landing-header">
         <div class="container landing-header__container grid">
             <div class="landing-header__text">
-                <h1 class="landing-header__title">Ваша персональная коробка знаний</h1>
-                <p class="landing-header__subtitle">Мы сами подберем информацию для вашего обучения</p>
+                <h1 class="landing-header__title">Cloud Experience</h1>
+                <p class="landing-header__subtitle">Здесь собираются самые лучшие материалы и практики. Чтобы вы тратили меньше времени и получали самые ценные знания.</p>
             </div><img class="landing-header__img" src="../static/img/header__illustrate.svg" />
         </div>
     </div>
     <main class="landing-main">
         <div class="container landing-main__container grid">
             <div class="landing-main__text grid">
-                <h2 class="landing-main__title title title_line-decorated">Процесс обучения</h2>
+                <h2 class="landing-main__title title title_line-decorated">Как пользоваться?</h2>
                 <ul class="landing-main__list">
-                    <li>Выбираете язык программирования для изучения</li>
-                    <li>Проходите темы</li>
+                    <li>Выбираете язык программирования</li>
+                    <li>Выбираете темы, фреймворки (скоро), которые хотите изучить</li>
                     <li>Выполняете практические задания в концe</li>
                 </ul>
             </div><img class="landing-main__img" src="../static/img/content__illustrate.svg" />
@@ -86,7 +88,7 @@
               </ul>
             </nav>
             <ul class="footer__social grid">
-              <li><a class="github" href="#"></a></li>
+              <li><a class="github" href="https://github.com/Dislate"></a></li>
             </ul>
           </div>
         </div>

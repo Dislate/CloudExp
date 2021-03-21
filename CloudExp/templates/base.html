@@ -21,7 +21,7 @@
         {% endif%}
         <li><a href=" {{url_for('logout')}} ">Log Out</a></li>
       {% else %}
-        {% for i in [[url_for('signup'), "Sign Up"], [url_for('signin'), "Sign In"]] %}
+        {% for i in [[url_for('signup'), "Регистрация"], [url_for('signin'), "Вход"]] %}
           <li><a href="{{i[0]}}">{{i[1]}}</a></li>
         {% endfor %}
       {% endif %}
@@ -30,7 +30,9 @@
   <header class="header">
     <div class="top-line">
       <div class="container top-line__container grid">
-        <div class="logo"><a href="/">CloudExp</a></div>
+        <div class="logo">
+          <img src="{{url_for('static', filename='img/Logo.svg')}}" alt="CloudExp">
+          <a href="/">CloudExp</a></div>
         <nav class="top-line__nav">
           <ul>
             {% for lang in languages_list %}
@@ -45,7 +47,7 @@
             {% endif%}
             <li><a href=" {{url_for('logout')}} ">Log Out</a></li>
           {% else %}
-            {% for i in [[url_for('signup'), "Sign Up"], [url_for('signin'), "Sign In"]] %}
+            {% for i in [[url_for('signup'), "Регистрация"], [url_for('signin'), "Вход"]] %}
               <li><a href="{{i[0]}}">{{i[1]}}</a></li>
             {% endfor %}
           {% endif %}
@@ -68,7 +70,7 @@
           </ul>
         </nav>
         <ul class="footer__social grid">
-          <li><a class="github" href="#"></a></li>
+          <li><a class="github" href="https://github.com/Dislate"></a></li>
         </ul>
       </div>
     </div>
