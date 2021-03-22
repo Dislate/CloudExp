@@ -13,7 +13,7 @@ def inject_languages():
 def home():
     return render_template("index.html")
 
-@app.route('/admin-panel', methods=['GET', 'POST', 'PUT'])
+@app.route('/admin-panel', methods=['GET', 'POST'])
 def admin_panel():
     if request.method == 'POST':
         
@@ -47,21 +47,31 @@ def admin_panel():
             db.session.commit()
             return redirect(url_for('admin_panel'))
 
-        try:
-            text_chapter = request.form['text_chapter']
-        except:
-            pass
+        text_chapter = request.form['text_chapter']
+        request_chapter = request.args.get('data_input_chapter')
+        if request_chapter:
+            current_chapter = chapters.query.filter_by(id_chapter=request_chapter).first()
         else:
-            request_chapter = request.args.get('data_input_chapter')
-            if request_chapter:
-                chapters.query.filter_by(id_chapter=request_chapter).update({"text_chapter": text_chapter})
-            else:
-                chapters.query.first().text_chapter = text_chapter
-            db.session.commit()
-            return redirect(url_for('admin_panel', data_input_chapter=request_chapter))
+            current_chapter = chapters.query.first().first()
+        current_chapter.text_chapter = text_chapter
+        for index, task in enumerate(current_chapter.task_list):
+            task.name_task = request.form['name_task_' + str(index+1)]
+            task.text_task = request.form['text_task_' + str(index+1)]
+            task.solution = request.form['solution_task_' + str(index+1)]
+            task.hint = request.form['hint_task_' + str(index+1)]
+        db.session.commit()
+        return redirect(url_for('admin_panel', data_input_chapter=request_chapter))
     
-    if request.args.get('data-task-chapter'):
-        chapterForTask = request.args.get('data-task-chapter')
+    if request.args.get('delete_task'):
+        indexDeleteTask = request.args.get('delete_task', type=int)
+        idChapter=request.args.get('current_chapter')
+        currentTask = chapters.query.filter_by(id_chapter=idChapter).first().task_list[indexDeleteTask - 1]
+        db.session.delete(currentTask)
+        db.session.commit()
+        return redirect(url_for('admin_panel', data_input_chapter=idChapter))
+
+    if request.args.get('adding_task'):
+        chapterForTask = request.args.get('adding_task')
         newTask = tasks(int(chapterForTask), '', '', '', '')
         db.session.add(newTask)
         db.session.commit()
@@ -97,13 +107,18 @@ def getPart(language, name_part, number_chapter):
     obj_lang = languages.query.filter_by(name_language=language).first()
     obj_part = obj_lang.part_list.filter_by(name_part=name_part).first()
     number_chapter = obj_part.chapter_list[int(number_chapter) - 1]
-    if request.method == 'POST':
-        text_chapter = request.form['update_chapter']
-        chapters.query.filter_by(id_chapter=1).update({'text_chapter': text_chapter})
-        db.session.commit()
+
+    def get_task(chapter):
+        task_list = number_chapter.task_list
+        try:
+            task_list[0]
+        except:
+            return ''
+        else:
+            return task_list
 
     if obj_lang and name_part:
-        return render_template('part.html', lang=obj_lang, part=obj_part, chapter=number_chapter, name_page=obj_lang.name_language + ' - ' + number_chapter.name_chapter)
+        return render_template('part.html', lang=obj_lang, part=obj_part, chapter=number_chapter, name_page=obj_lang.name_language + ' - ' + number_chapter.name_chapter, task_list=get_task(number_chapter))
     else:
         return redirect(url_for('home'))
 

@@ -1018,6 +1018,19 @@ input {
     text-align: start
 }
 
+.admin-panel-main__delete-task-btn{
+    background-color: inherit;
+    text-align: start;
+    margin-top: 5px;
+    font-family: NunitoBold, sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-panel-main__delete-task-btn a {
+    color: #ff6961;
+}
+
 .admin-panel-main__add-task-btn {
     background-color: inherit;
     color: #192457;
@@ -1052,6 +1065,8 @@ input {
 
 .admin-panel-main__task {
     padding-bottom: 10px;
+    border-top: solid 2px #f5f5f5;
+    border-bottom: solid 2px #f5f5f5;
 }
 
 .admin-panel-main__task-item textarea {
@@ -1079,7 +1094,6 @@ input {
 .admin-panel-main__name-task {
     font-size: 1.125rem;
     padding: 10px 0 10px 0;
-    border-top: solid 2px #f5f5f5;
 }
 
 .admin-panel-main__task-item h3 {

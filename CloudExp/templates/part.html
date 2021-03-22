@@ -14,6 +14,28 @@
         <div class="chapter-main-content">
             <h1 class="chapter-main-content__title">{{chapter.name_chapter}}</h1>
             {{chapter.text_chapter | safe}}
+            <div class="tasks">
+                {% if task_list != '' %}
+                    <h2 class="tasks__header">Задачи</h5>
+                    {% for task in task_list %}
+                        <div class="task">
+                            <h3 class="task__header">Задача {{loop.index}}</h6>
+                            <h4 class='task_name'>{{task.name_task}}</h4>
+                            <p class="task__content">{{task.text_task}}</p>
+                            <div class="task-answer">
+                                <div class="task-answer__code hidden">
+                                    {{task.solution | safe}}
+                                </div>
+                                <button class="task-answer__hide">Скрыть решение</button>
+                                <div class="hidden">
+                                    <p class="task_answer_hint">{{task.hint}}</p>
+                                </div>
+                                <button class="task-answer__show-hint">Подсказка</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
 </main>

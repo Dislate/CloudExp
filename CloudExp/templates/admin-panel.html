@@ -63,10 +63,11 @@
                                     <p class="admin-panel-main__hint-task">Подсказка</p>
                                     <textarea class="admin-panel-main__input-task" type="text" name='hint_task_{{loop.index}}'>{{task.hint}}</textarea>
                                 </div>
+                                <button class="admin-panel-main__delete-task-btn"><a href="/admin-panel?current_chapter={{obj_chapter.id_chapter}}&delete_task={{loop.index}}">- Удалить задачу</a></button>
                             </div>
                         {% endfor %}
                     {% endif%}
-                    <button class='admin-panel-main__add-task-btn'><a href="/admin-panel?data-task-chapter={{obj_chapter.id_chapter}}">+ Добавить задачу</a></button>
+                    <button class='admin-panel-main__add-task-btn'><a href="/admin-panel?adding_task={{obj_chapter.id_chapter}}">+ Добавить задачу</a></button>
                     <button class="admin-panel-main__create-chapter">Обновить</button>
                 </form>
             </div>
