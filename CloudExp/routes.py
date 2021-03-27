@@ -52,7 +52,7 @@ def admin_panel():
         if request_chapter:
             current_chapter = chapters.query.filter_by(id_chapter=request_chapter).first()
         else:
-            current_chapter = chapters.query.first().first()
+            current_chapter = chapters.query.first()
         current_chapter.text_chapter = text_chapter
         for index, task in enumerate(current_chapter.task_list):
             task.name_task = request.form['name_task_' + str(index+1)]

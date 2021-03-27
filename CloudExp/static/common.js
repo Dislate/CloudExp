@@ -79,5 +79,41 @@ function insertTag() {
   });
 }
 
+function toggleSolution() {
+    const btns = document.querySelectorAll('.task__solution-btn');
+    
+    btns.forEach((btn) => {
+        btn.onclick = function() {
+            let element = this.parentElement.querySelector('.task__solution-code');
+            element.classList.toggle('hidden');
+            element.classList.toggle('show');
+            if (btn.textContent == "Показать решение") {
+                btn.textContent = "Скрыть решение";
+            } else {
+                btn.textContent = "Показать решение"
+            }
+            console.log(element);
+        };
+    });
+}
 
-hljs.initHighlightingOnLoad(), sideMenu(), toggleAdminMenu(), insertTag();
+
+function toggleHint() {
+    const btns = document.querySelectorAll('.task-solution-hint__btn');
+    
+    btns.forEach((btn) => {
+        btn.onclick = function() {
+            let element = this.parentElement.querySelector('.task-solution-hint__popup');
+            element.classList.toggle('hidden');``
+            element.classList.toggle('show');
+            console.log(element);
+        };
+    });
+}
+
+toggleSolution();
+toggleHint();
+hljs.initHighlightingOnLoad();
+sideMenu();
+toggleAdminMenu(); 
+insertTag();

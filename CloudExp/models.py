@@ -60,7 +60,7 @@ class tasks(db.Model):
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id_chapter', ondelete='CASCADE'))
     name_task = db.Column(db.String(100))
     text_task = db.Column(db.String(1000))
-    solution = db.Column(db.String(500))
+    solution = db.Column(db.String(1000))
     hint = db.Column(db.String(500))
     chapter = db.relationship('chapters', backref='task')
 
