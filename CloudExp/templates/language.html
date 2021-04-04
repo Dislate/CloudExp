@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} {{name_page}} {% endblock %}
+{% block title %}{{name_page}}{% endblock %}
 {% block content %}
 <main class="languages-main">
     <div class="container">
@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="languages-main__items grid">
                     {% for chapter in part.chapter_list %}
-                            <a class="languages-main__item unreaded" href=" {{url_for('getPart', language=lang.name_language, name_part=part.name_part, number_chapter=loop.index)}} ">{{ chapter.name_chapter }}</a>
+                            <a class="languages-main__item" href=" {{url_for('getPart', language=lang.name_language, name_part=part.name_part, number_chapter=loop.index)}} ">{{ chapter.name_chapter }}</a>
                     {% endfor %}
                 </div>
             </div>

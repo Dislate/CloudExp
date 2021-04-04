@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>{% block title %}Home page{% endblock %}</title>
+  <title>CloudExp</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href=" {{url_for('static', filename='img/favicon.png')}} " type="image/x-icon">
@@ -61,7 +61,8 @@
             <div class="landing-header__text">
                 <h1 class="landing-header__title">Cloud Experience</h1>
                 <p class="landing-header__subtitle">Здесь собираются самые лучшие материалы и практики. Чтобы вы тратили меньше времени и получали самые ценные знания.</p>
-            </div><img class="landing-header__img" src="../static/img/header__illustrate.svg" />
+            </div>
+            <img class="landing-header__img" src="../static/img/header__illustrate.svg" alt='Разнообразие языков программирования' />
         </div>
     </div>
     <main class="landing-main">
@@ -73,18 +74,22 @@
                     <li>Выбираете темы, фреймворки (скоро), которые хотите изучить</li>
                     <li>Выполняете практические задания в концe</li>
                 </ul>
-            </div><img class="landing-main__img" src="../static/img/content__illustrate.svg" />
+            </div>
+            <img class="landing-main__img" src="../static/img/content__illustrate.svg" alt='Как пользоваться?'/>
         </div>
     </main>
     <footer class="footer">
         <div class="container">
           <div class="footer__content grid">
-            <div class="logo"><a href=" {{url_for('home')}} ">CloudExp</a></div>
+            <div class="logo">
+                <img src="{{url_for('static', filename='img/white_logo.svg')}}" alt="CloudExp">
+                <a href=" {{url_for('home')}} ">CloudExp</a>
+            </div>
             <nav class="footer__nav">
               <ul class="grid">
-                <li><a href="#">Условия</a></li>
-                <li><a href="#">О нас</a></li>
-                <li><a href="#">Контакты</a></li>
+                <li><a href="{{url_for('agreement')}}">Условия пользования сайтом</a></li>
+                <!-- <li><a href="#">О нас</a></li>
+                <li><a href="#">Контакты</a></li> -->
               </ul>
             </nav>
             <ul class="footer__social grid">

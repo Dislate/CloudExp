@@ -1,6 +1,6 @@
 from flask import redirect, url_for, render_template, request, session, flash
 from CloudExp import app, db, bcrypt
-from CloudExp.models import users, languages, parts, chapters, tasks
+from CloudExp.models import users, languages, parts, chapters, tasks, seo 
 from CloudExp.forms import RegistrationForm, LoginForm
 from flask_login import login_user, current_user, logout_user
 
@@ -12,6 +12,10 @@ def inject_languages():
 @app.route('/')
 def home():
     return render_template("index.html")
+
+@app.route('/agreement')
+def agreement():
+    return render_template("agreement.html")
 
 @app.route('/admin-panel', methods=['GET', 'POST'])
 def admin_panel():
@@ -46,6 +50,22 @@ def admin_panel():
             db.session.add(newChapter)
             db.session.commit()
             return redirect(url_for('admin_panel'))
+        
+        try: 
+            keywords = request.form['keywords_chapter']
+            description = request.form['description_chapter']
+        except:
+            pass
+        else:
+            if request.args.get('data_input_chapter'):
+                chapter = chapters.query.filter_by(id_chapter=request.args.get('data_input_chapter')).first()
+            else:
+                chapter = chapters.query.first()
+            
+            chapter.seo.keywords = keywords
+            chapter.seo.description = description
+            db.session.commit()
+            return redirect(url_for('admin_panel', data_input_chapter=chapter.id_chapter))
 
         text_chapter = request.form['text_chapter']
         request_chapter = request.args.get('data_input_chapter')
@@ -61,7 +81,7 @@ def admin_panel():
             task.hint = request.form['hint_task_' + str(index+1)]
         db.session.commit()
         return redirect(url_for('admin_panel', data_input_chapter=request_chapter))
-    
+
     if request.args.get('delete_task'):
         indexDeleteTask = request.args.get('delete_task', type=int)
         idChapter=request.args.get('current_chapter')
@@ -85,6 +105,12 @@ def admin_panel():
                     obj_chapter = chapters.query.filter_by(id_chapter=data).first()
                 else:
                     obj_chapter = languages.query.first().part_list.first().chapter_list.first()
+                
+                if not obj_chapter.seo:
+                    add_seo_chapter = seo(obj_chapter.id_chapter, '', '')
+                    db.session.add(add_seo_chapter)
+                    db.session.commit()
+                
                 return render_template('admin-panel.html', langs=languages.query.all(), obj_chapter=obj_chapter, name_page='Админ-панель')
             else:
                 return render_template('admin-panel.html', langs=languages.query.all(), obj_chapter='', name_page='Админ-панель')

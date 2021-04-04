@@ -48,8 +48,8 @@ class chapters(db.Model):
     part_id = db.Column(db.Integer, db.ForeignKey('parts.id_part', ondelete="CASCADE"))
     name_chapter = db.Column(db.String(50))
     text_chapter = db.Column(db.String(5000))
-    task_list = db.relationship('tasks', backref='chapters', passive_deletes=True, lazy='dynamic')
-
+    task_list = db.relationship('tasks', backref='chapter', passive_deletes=True, lazy='dynamic')
+    seo = db.relationship('seo', backref='chapter', uselist=False, passive_deletes=True)
     def __init__(self, part_id, name_chapter, text_chapter):
         self.part_id = part_id
         self.name_chapter = name_chapter
@@ -62,7 +62,6 @@ class tasks(db.Model):
     text_task = db.Column(db.String(1000))
     solution = db.Column(db.String(1000))
     hint = db.Column(db.String(500))
-    chapter = db.relationship('chapters', backref='task')
 
     def __init__(self, chapter_id, name_task, text_task, solution, hint):
         self.chapter_id = chapter_id
@@ -70,3 +69,14 @@ class tasks(db.Model):
         self.text_task = text_task
         self.solution = solution
         self.hint = hint
+
+class seo(db.Model):
+    id = db.Column('id', db.Integer, primary_key=True)
+    chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id_chapter', ondelete='CASCADE'))
+    keywords = db.Column(db.String(50))
+    description = db.Column(db.String(2000))
+
+    def __init__(self, chapter_id, keywords, description):
+        self.chapter_id = chapter_id
+        self.keywords = keywords
+        self.description = description

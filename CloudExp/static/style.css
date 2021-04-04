@@ -190,16 +190,28 @@ button:-moz-focusring {
 }
 
 fieldset {
-    padding: .35em .75em .625em
+    border: none;
+    padding: 0;
+    border-top: solid 2px #f5f5f5;
 }
+
+.admin-panel-main__seo-btn {
+    display: block;
+} 
 
 legend {
     box-sizing: border-box;
     color: inherit;
     display: table;
     max-width: 100%;
-    padding: 0;
+    text-align: center;
+    padding: 0 10px;
     white-space: normal
+}
+
+label {
+    display: block !important;
+    padding: 5px 0;
 }
 
 textarea {
@@ -274,7 +286,6 @@ a {
     max-width: 1210px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 20px
 }
 
 header {
@@ -441,6 +452,10 @@ header {
     background-color: #192457;
     color: #fff;
     padding: 40px 0
+}
+
+.footer img {
+    width: 25px;
 }
 
 .footer__content {
@@ -908,13 +923,13 @@ input {
     font-size: 1rem;
 }
 
-.admin-panel-main__create-chapter {
+.admin-panel-main__create-chapter, .admin-panel-main__seo-btn {
     font-family: NunitoBold, sans-serif;
 }
 
 .admin-panel-main__container {
     grid-auto-flow: column;
-    grid-template-columns: minmax(auto, 370px) minmax(auto, 565px) minmax(auto, 175px);
+    grid-template-columns: minmax(auto, 370px) minmax(auto, 565px) minmax(auto, 214px);
     -moz-column-gap: 30px;
     column-gap: 30px
 }
@@ -1007,13 +1022,7 @@ input {
     cursor: pointer;
 }
 
-.admin-panel-main__input-task {
-    height: 34px;
-    background-color: #f6f4fc;
-    border-radius: 4px
-}
-
-.admin-panel-main__create-chapter {
+.admin-panel-main__create-chapter, .admin-panel-main__seo-btn {
     width: 130px;
     height: 40px;
     margin: 15px auto 100px auto;
@@ -1024,9 +1033,12 @@ input {
     cursor: pointer
 }
 
-.admin-panel-main__task input {
-    padding-left: 5px;
+.admin-panel-main__task input, .admin-panel-main__seo-input {
+    padding-left: 10px;
     width: 100%;
+    height: 34px;
+    background-color: #f6f4fc;
+    border-radius: 4px;
 }
 
 .admin-panel-main__task {
@@ -1035,19 +1047,19 @@ input {
     border-bottom: solid 2px #f5f5f5;
 }
 
-.admin-panel-main__task-item textarea {
+.admin-panel-main__task-item textarea, .admin-panel-main__seo-input {
     box-sizing: border-box;
     min-height: 40px;
     width: 100%;
     background-color: #f6f4fc;
-    padding: 8px 5px;
+    padding: 10px 10px;
     border-radius: 4px;
     border: none;
     resize: vertical;
     outline: 0
 }
 
-.admin-panel-main__task-item:nth-child(3) textarea {
+.admin-panel-main__task-item:nth-child(3) textarea, #description {
     min-height: 100px;
 }
 
@@ -1077,6 +1089,12 @@ input {
     border: none;
     outline: 0
 }
+
+#title_seo, #title_btns {
+    font-family: NunitoBold, sans-serif;
+    font-weight: 700;
+}
+
 
 * ::-webkit-scrollbar {
     background-color: #f6f4fc;
@@ -1344,9 +1362,14 @@ input {
     margin-top: -8px
 }
 
-
 .admin-panel-main__btn{
     background: none;
     color: #192457;
 
+}
+
+.agreement__container {
+    max-width: 670px;
+    margin: auto;
+    margin: 80px auto 40px auto;
 }

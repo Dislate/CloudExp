@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} {{name_page}} {% endblock %}
+{% block title %}{{name_page}}{% endblock %}
 {% block content %}
     <main class="admin-panel-main">
         <div class="container admin-panel-main__container grid">
@@ -48,20 +48,20 @@
                         {% for task in obj_chapter.task_list %}
                             <div class="admin-panel-main__task">
                                 <div class="admin-panel-main__task-item">
-                                    <h3 class="admin-panel-main__name-task">Название задачи #{{loop.index}}</h3>
-                                    <input class="admin-panel-main__input-task" type="text" name='name_task_{{loop.index}}' value='{{ task.name_task}}' />
+                                    <label for='name_task_{{loop.index}}' class="admin-panel-main__name-task">Название задачи #{{loop.index}}</label>
+                                    <input class="admin-panel-main__input-task" type="text" name='name_task_{{loop.index}}' value='{{ task.name_task}}' id='name_task_{{loop.index}}'/>
                                 </div>
                                 <div class="admin-panel-main__task-item">
-                                    <p class="admin-panel-main__condition-task">Условия задачи</p>
-                                    <textarea class="admin-panel-main__input-task" type="text" name='text_task_{{loop.index}}'>{{task.text_task}}</textarea>
+                                    <label for='text_task_{{loop.index}}' class="admin-panel-main__condition-task">Условия задачи</label>
+                                    <textarea class="admin-panel-main__input-task" type="text" name='text_task_{{loop.index}}' id='text_task_{{loop.index}}'>{{task.text_task}}</textarea>
                                 </div>
                                 <div class="admin-panel-main__task-item">
-                                    <p class="admin-panel-main__solution-task">Решение</p>
-                                    <textarea class="admin-panel-main__input-task" type="text" name='solution_task_{{loop.index}}'>{{task.solution}}</textarea>
+                                    <label for='solution_task_{{loop.index}}' class="admin-panel-main__solution-task">Решение</label>
+                                    <textarea class="admin-panel-main__input-task" type="text" name='solution_task_{{loop.index}}' id='solution_task_{{loop.index}}'>{{task.solution}}</textarea>
                                 </div>
                                 <div class="admin-panel-main__task-item">
-                                    <p class="admin-panel-main__hint-task">Подсказка</p>
-                                    <textarea class="admin-panel-main__input-task" type="text" name='hint_task_{{loop.index}}'>{{task.hint}}</textarea>
+                                    <label for='hint_task_{{loop.index}}' class="admin-panel-main__hint-task">Подсказка</label>
+                                    <textarea class="admin-panel-main__input-task" type="text" name='hint_task_{{loop.index}}' id='hint_task_{{loop.index}}'>{{task.hint}}</textarea>
                                 </div>
                                 <button class="admin-panel-main__delete-task-btn"><a href="/admin-panel?current_chapter={{obj_chapter.id_chapter}}&delete_task={{loop.index}}">- Удалить задачу</a></button>
                             </div>
@@ -71,15 +71,28 @@
                     <button class="admin-panel-main__create-chapter">Обновить</button>
                 </form>
             </div>
-            <div id='btns-cont' class="admin-panel-main__col">
-                <button class="admin-panel-main__h1 admin-panel-main__add-btn">+ Заголовок 1 уровня</button>
-                <button class="admin-panel-main__h2 admin-panel-main__add-btn">+ Заголовок 2 уровня</button>
-                <button class="admin-panel-main__h3 admin-panel-main__add-btn">+ Заголовок 3 уровня</button>
-                <button class="admin-panel-main__ul admin-panel-main__add-btn">+ Маркерованный список</button>
-                <button class="admin-panel-main__ol admin-panel-main__add-btn">+ Нумерованный список</button>
-                <button class="admin-panel-main__p admin-panel-main__add-btn">+ Параграф</button>
-                <button class="admin-panel-main__img admin-panel-main__add-btn">+ Изображение</button>
-                <button class="admin-panel-main__highlightjs admin-panel-main__add-btn">+ Вставить highlight-код</button>
+            <div class="admin-panel-main__col">
+                <fieldset id='btns-cont' class="admin-panel-main__btns">
+                    <legend id='title_btns'>Buttons</legend>
+                    <button class="admin-panel-main__h1 admin-panel-main__add-btn">+ Заголовок 1 уровня</button>
+                    <button class="admin-panel-main__h2 admin-panel-main__add-btn">+ Заголовок 2 уровня</button>
+                    <button class="admin-panel-main__h3 admin-panel-main__add-btn">+ Заголовок 3 уровня</button>
+                    <button class="admin-panel-main__ul admin-panel-main__add-btn">+ Маркерованный список</button>
+                    <button class="admin-panel-main__ol admin-panel-main__add-btn">+ Нумерованный список</button>
+                    <button class="admin-panel-main__p admin-panel-main__add-btn">+ Параграф</button>
+                    <button class="admin-panel-main__img admin-panel-main__add-btn">+ Изображение</button>
+                    <button class="admin-panel-main__highlightjs admin-panel-main__add-btn">+ Вставить highlight-код</button>
+                </fieldset>
+                <form class="admin-panel-main__seo-from" action="#" method="POST">
+                    <fieldset class="admin-panel-main__seo">
+                        <legend id='title_seo'>SEO</legend>
+                        <label for="keywords" class="admin-panel-main__seo-item">Ключевые слова</label>
+                        <input type="text" id='keywords' class='admin-panel-main__seo-input' name='keywords_chapter' value='{{obj_chapter.seo.keywords}}'>
+                        <label for="description" class="admin-panel-main__seo-item">Описание</label>
+                        <textarea type="text" id='description' class='admin-panel-main__seo-input' name='description_chapter'>{{obj_chapter.seo.description}}</textarea>
+                        <button type="submit" class='admin-panel-main__seo-btn'>Обновить</button>
+                    </fieldset>
+                </form>
             </div>
         </div>
     </main> 
