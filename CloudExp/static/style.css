@@ -676,7 +676,7 @@ input {
 }
 
 .signin-main__block input {
-    font-size: .875rem
+    font-size: 1rem
 }
 
 .signin-main__text {
@@ -716,9 +716,12 @@ input {
     border-radius: 36px;
     border: none;
     background-color: #f6f4fc;
-    margin-bottom: 10px;
     padding-left: 25px;
     outline: 0
+}
+
+.signin-main__password {
+    margin: 10px 0 0 0;
 }
 
 .signin-main__login::-moz-placeholder,
@@ -763,7 +766,6 @@ input {
 
 .signup-main__block input, p {
     font-size: 1rem;
-    margin: 10px 0;
 }
 
 .signup-main__text {
@@ -828,13 +830,13 @@ input {
 }
 
 .signup-main__btn {
-    width: 130px;
+    width: 160px;
     height: 40px;
     border: none;
     border-radius: 36px;
     background-color: #4160ef;
     color: #fff;
-    margin-top: 40px;
+    margin-top: 30px;
     justify-self: center
 }
 
