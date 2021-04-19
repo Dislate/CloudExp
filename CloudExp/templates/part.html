@@ -12,10 +12,10 @@
 <main class="chapter-main">
     <div class="container chapter-main__container grid">
         <div class="chapter-main-sidebar">
-            <h3 class="chapter-main-sidebar__title">{{part.name_part}}</h3>
+            <h3 class="chapter-main-sidebar__title">{{number_part.name_part}}</h3>
             <ul class="chapter-main-sidebar__list">
-                {% for chapter in part.chapter_list %}
-                    <li class="chapter-main-sidebar__list-item"><a class="chapter-main-sidebar__list-link" href="{{url_for('getPart', language=lang.name_language, name_part=part.name_part, number_chapter=loop.index)}}">- {{chapter.name_chapter}}</a></li>
+                {% for chapter in number_part.chapter_list %}
+                    <li class="chapter-main-sidebar__list-item"><a class="chapter-main-sidebar__list-link" href="{{url_for('getPart', language=current_language.name_language, number_part=loop.index, number_chapter=loop.index)}}">- {{chapter.name_chapter}}</a></li>
                 {% endfor %}
             </ul>
         </div>

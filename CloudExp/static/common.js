@@ -46,7 +46,7 @@ function insertTag() {
       }
       
       if(target.classList.contains('admin-panel-main__h1')) {
-          insertTag("<h1 class='chapter-main-content__title'></h1>");
+          insertTag("<h1></h1>");
       }
       
       if(target.classList.contains('admin-panel-main__h2')) {
@@ -66,7 +66,7 @@ function insertTag() {
       }
       
       if(target.classList.contains('admin-panel-main__p')) {
-          insertTag("<p class='chapter-main-content__text'></p>");
+          insertTag("<p></p>");
       }
       
       if(target.classList.contains('admin-panel-main__img')) {

@@ -4,24 +4,26 @@
 {% block content %}
     <main class="signin-main grid">
         <form action="#" method="POST" class="user-form">
-            <div class="container">
-                <div class="signin-main__block grid">
-                    <h1 class="signin-main__text">ВХОД</h1>
-                    {{ form.csrf_token }}
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for msg in messages %}
-                                    <div class="signin-main__message bg-red">
-                                        <p class="signin-main__message-item">{{msg}}</p>
-                                    </div>
-                            {% endfor%}
-                        {% endif%}
-                    {% endwith %}
+            {{ form.hidden_tag() }}
+            <fieldset class="signin-main__block grid container">
+                {{ form.csrf_token }}
+                <h1 class="signin-main__text">ВХОД</h1>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <p class="signup-main__message bg-red">{{msg}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        <p class="signup-main__message bg-red">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
                     {{ form.username(class="signin-main__login", placeholder="Логин")}}
-                    {{ form.password(class='signin-main__password', placeholder='Пароль') }}
-                    {{ form.submit(class='signin-main__btn') }}
-                </div>
-            </div>
+                    {{ form.password(class="signin-main__password", placeholder="Пароль")}}
+            </fieldset>
+            {{ form.submit(class='signin-main__btn') }}
         </form>
     </main>
 {% endblock %}

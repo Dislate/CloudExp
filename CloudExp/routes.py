@@ -1,7 +1,7 @@
-from flask import redirect, url_for, render_template, request, session, flash
+from flask import redirect, url_for, render_template, request, session, flash, send_from_directory
 from CloudExp import app, db, bcrypt
 from CloudExp.models import users, languages, parts, chapters, tasks, seo 
-from CloudExp.forms import RegistrationForm, LoginForm
+from CloudExp.forms import RegistrationForm, LoginForm, AddingLanguage, AddingPart, AddingChapter
 from flask_login import login_user, current_user, logout_user
 
 
@@ -13,6 +13,10 @@ def inject_languages():
 def home():
     return render_template("index.html")
 
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory(app.static_folder, request.path[1:])
+
 @app.route('/agreement')
 def agreement():
     return render_template("agreement.html")
@@ -20,36 +24,6 @@ def agreement():
 @app.route('/admin-panel', methods=['GET', 'POST'])
 def admin_panel():
     if request.method == 'POST':
-        
-        try:
-            requestLang = request.form['name_language']
-        except:
-            pass
-        else:
-            newLang = languages(requestLang, 'lorem')
-            db.session.add(newLang)
-            db.session.commit()
-            return redirect(url_for('admin_panel'))
-
-        try:
-            requestPart = request.form['name_part']
-        except:
-            pass
-        else:
-            newPart = parts(request.args.get('data-id-lang'), request.form['name_part'])
-            db.session.add(newPart)
-            db.session.commit()
-            return redirect(url_for('admin_panel'))
-
-        try:
-            requestChapter = request.form['name_chapter']
-        except:
-            pass
-        else:
-            newChapter = chapters(request.args.get('data-id-part'), request.form['name_chapter'], 'Enter text here, bro')
-            db.session.add(newChapter)
-            db.session.commit()
-            return redirect(url_for('admin_panel'))
         
         try: 
             keywords = request.form['keywords_chapter']
@@ -119,20 +93,67 @@ def admin_panel():
     else:
         return redirect(url_for('signin'))
 
+@app.route('/adding-language', methods=['GET', 'POST'])
+def adding_language():
+    if current_user.is_authenticated and current_user.privilages == 'is_admin':
+
+        adding_language = AddingLanguage()
+
+        if adding_language.validate_on_submit():
+            new_language = languages(adding_language.name_language.data, adding_language.description_language.data)
+            db.session.add(new_language)
+            db.session.commit()
+            return redirect(url_for('admin_panel'))
+
+        return render_template('adding-language.html', form=adding_language)
+    else:
+        return 'Access dinied'
+
+@app.route('/adding-part', methods=['GET', 'POST'])
+def adding_part():
+    if current_user.is_authenticated and current_user.privilages == 'is_admin':
+
+        adding_part = AddingPart()
+
+        if adding_part.validate_on_submit():
+            new_part = parts(languages.query.filter_by(name_language=adding_part.name_language.data).first().id_language, adding_part.name_part.data)
+            db.session.add(new_part)
+            db.session.commit()
+            return redirect(url_for('admin_panel'))
+        
+        return render_template('adding-part.html', form=adding_part, language=request.args.get('language'))
+    else:
+        return 'Access denied'
+
+@app.route('/adding-chapter', methods=['GET', 'POST'])
+def adding_chapter():
+    if current_user.is_authenticated and current_user.privilages == 'is_admin':
+
+        adding_chapter = AddingChapter()
+        if adding_chapter.validate_on_submit():
+            new_chapter = chapters(parts.query.filter_by(name_part=adding_chapter.name_part.data).first().id_part, adding_chapter.name_chapter.data, adding_chapter.text_chapter.data)
+            db.session.add(new_chapter)
+            db.session.commit()
+            return redirect(url_for('admin_panel'))
+        
+        return render_template('adding-chapter.html', form=adding_chapter, part=request.args.get('part'))
+    else:
+        return 'Access denied'
+
 
 @app.route('/languages/<language>', methods=['POST', 'GET'])
 def getLanguage(language):
-    obj_language = languages.query.filter_by(name_language=language).first()
-    if obj_language:
-        return render_template('language.html', lang=obj_language, name_page=obj_language.name_language)
+    current_language = languages.query.filter_by(name_language=language).first()
+    if current_language:
+        return render_template('language.html', current_language=current_language, name_page=current_language.name_language)
     else:
         return redirect(url_for('home'))
 
-@app.route('/<language>/<name_part>/<number_chapter>', methods=['POST', 'GET'])
-def getPart(language, name_part, number_chapter):
-    obj_lang = languages.query.filter_by(name_language=language).first()
-    obj_part = obj_lang.part_list.filter_by(name_part=name_part).first()
-    number_chapter = obj_part.chapter_list[int(number_chapter) - 1]
+@app.route('/<language>/<number_part>/<number_chapter>', methods=['GET'])
+def getPart(language, number_part, number_chapter):
+    current_language = languages.query.filter_by(name_language=language).first()
+    number_part = current_language.part_list[int(number_part) - 1]
+    number_chapter = number_part.chapter_list[int(number_chapter) - 1]
 
     def get_task(chapter):
         task_list = number_chapter.task_list
@@ -143,8 +164,8 @@ def getPart(language, name_part, number_chapter):
         else:
             return task_list
 
-    if obj_lang and name_part:
-        return render_template('part.html', lang=obj_lang, part=obj_part, chapter=number_chapter, name_page=obj_lang.name_language + ' - ' + number_chapter.name_chapter, task_list=get_task(number_chapter))
+    if current_language and number_part:
+        return render_template('part.html', current_language=current_language, number_part=number_part, chapter=number_chapter, name_page=current_language.name_language + ' - ' + number_chapter.name_chapter, task_list=get_task(number_chapter))
     else:
         return redirect(url_for('home'))
 
@@ -157,13 +178,10 @@ def signin():
 
     if form.validate_on_submit():
         user = users.query.filter_by(name=form.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for("home"))
-        else:
-            flash("Данные не верны")
-            return redirect(url_for("signin"))
-
+        flash('Пароль не верный')
     return render_template('signin.html', form=form, name_page='Вход')
 
 
@@ -175,12 +193,9 @@ def signup():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        if users.query.filter_by(name=form.username.data).first() and users.query.filter_by(email=form.email.data).first():
-            return redirect(url_for("signup"))
-        else:
-            user = users(form.username.data, bcrypt.generate_password_hash(form.password.data), form.email.data, 'is_user')
-            db.session.add(user)
-            db.session.commit()
+        user = users(form.username.data, bcrypt.generate_password_hash(form.password.data), form.email.data, 'is_user')
+        db.session.add(user)
+        db.session.commit()
         return redirect(url_for("home"))
     return render_template("signup.html", form=form, name_page='Регистрация')
 

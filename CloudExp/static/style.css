@@ -92,17 +92,13 @@ html {
     -webkit-text-size-adjust: 100%
 }
 
-body {
-    margin: 0
-}
-
 main {
     display: block
 }
 
 h1 {
     font-size: 2em;
-    margin: .67em 0
+    margin: 0 0 0.2em 0
 }
 
 hr {
@@ -189,15 +185,14 @@ button:-moz-focusring {
     outline: 1px dotted ButtonText
 }
 
-fieldset {
-    border: none;
-    padding: 0;
-    border-top: solid 2px #f5f5f5;
-}
-
 .admin-panel-main__seo-btn {
     display: block;
 } 
+
+fieldset {
+    border: none;
+    padding: 0;
+}
 
 legend {
     box-sizing: border-box;
@@ -267,6 +262,12 @@ body {
     font-weight: 400;
     position: relative;
     height: 100%
+}
+
+@media only screen and (max-width:1250px) {
+    .container {
+        padding: 0 20px;
+    }
 }
 
 img {
@@ -650,14 +651,10 @@ input {
     }
 }
 
-.signin-main__message {
-    margin: 0 0 20px 0;
+.signin-main__message,
+.signup-main__message {
+    margin: 0 0 10px 0;
     padding: 7px;
-}
-
-.signin-main__message p{
-    padding: 0;
-    margin: 0;
 }
 
 .bg-red {
@@ -666,90 +663,7 @@ input {
     color: #f66257;
 }
 
-.signin-main {
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    min-height: 80.8vh;
-    font-family: NunitoSemiBold, sans-serif;
-    font-weight: 600
-}
-
-.signin-main__block input {
-    font-size: 1rem
-}
-
-.signin-main__text {
-    font-family: NunitoBold, sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    position: relative;
-    margin-bottom: 20px
-}
-
-.signin-main__text::before {
-    content: '';
-    position: absolute;
-    background-color: #f6f4fc;
-    width: 100px;
-    height: 2px;
-    top: 50%;
-    left: 5px;
-    border-radius: 5px
-}
-
-.signin-main__text::after {
-    content: '';
-    position: absolute;
-    background-color: #f6f4fc;
-    width: 100px;
-    height: 2px;
-    top: 50%;
-    right: 5px;
-    border-radius: 5px
-}
-
-.signin-main__login,
-.signin-main__password {
-    width: 280px;
-    height: 40px;
-    border-radius: 36px;
-    border: none;
-    background-color: #f6f4fc;
-    padding-left: 25px;
-    outline: 0
-}
-
-.signin-main__password {
-    margin: 10px 0 0 0;
-}
-
-.signin-main__login::-moz-placeholder,
-.signin-main__password::-moz-placeholder {
-    color: #192457
-}
-
-.signin-main__login:-ms-input-placeholder,
-.signin-main__password:-ms-input-placeholder {
-    color: #192457
-}
-
-.signin-main__login::placeholder,
-.signin-main__password::placeholder {
-    color: #192457
-}
-
-.signin-main__btn {
-    width: 130px;
-    height: 40px;
-    border: none;
-    border-radius: 36px;
-    background-color: #4160ef;
-    color: #fff;
-    margin-top: 40px;
-    justify-self: center
-}
-
+.signin-main,
 .signup-main {
     justify-content: center;
     text-align: center;
@@ -759,15 +673,12 @@ input {
     font-weight: 600
 }
 
-.signup-main__message {
-    padding: 7px;
-    margin-bottom: 7px;
-}
-
+.signin-main__block input,
 .signup-main__block input, p {
-    font-size: 1rem;
+    font-size: 1rem
 }
 
+.signin-main__text,
 .signup-main__text {
     font-family: NunitoBold, sans-serif;
     font-weight: 700;
@@ -776,28 +687,33 @@ input {
     margin-bottom: 20px
 }
 
-.signup-main__text::before {
-    content: '';
-    position: absolute;
-    background-color: #f6f4fc;
-    width: 70px;
-    height: 2px;
-    top: 50%;
-    left: 5px;
-    border-radius: 5px
-}
-
+.signin-main__text::before,
+.signin-main__text::after,
+.signup-main__text::before,
 .signup-main__text::after {
     content: '';
     position: absolute;
     background-color: #f6f4fc;
-    width: 70px;
     height: 2px;
     top: 50%;
-    right: 5px;
     border-radius: 5px
 }
 
+.signin-main__text::before,
+.signin-main__text::after {
+    width: 100px;
+}
+
+.signin-main__text::before {
+    left: 5px;
+}
+
+.signin-main__text::before {
+    right: 5px;
+}
+
+.signin-main__login,
+.signin-main__password,
 .signup-main__email,
 .signup-main__login,
 .signup-main__password {
@@ -811,33 +727,55 @@ input {
     outline: 0
 }
 
+
+.signin-main__login::-moz-placeholder,
+.signin-main__password::-moz-placeholder,
+.signin-main__login::placeholder,
+.signin-main__password::placeholder,
+.signin-main__login:-ms-input-placeholder,
+.signin-main__password:-ms-input-placeholder,
 .signup-main__email::-moz-placeholder,
 .signup-main__login::-moz-placeholder,
-.signup-main__password::-moz-placeholder {
-    color: #192457
-}
-
+.signup-main__password::-moz-placeholder,
 .signup-main__email:-ms-input-placeholder,
 .signup-main__login:-ms-input-placeholder,
-.signup-main__password:-ms-input-placeholder {
-    color: #192457
-}
-
+.signup-main__password:-ms-input-placeholder,
 .signup-main__email::placeholder,
 .signup-main__login::placeholder,
-.signup-main__password::placeholder {
+.signup-main__password::placeholder  {
     color: #192457
 }
 
+.signin-main__btn,
 .signup-main__btn {
-    width: 160px;
     height: 40px;
     border: none;
     border-radius: 36px;
     background-color: #4160ef;
     color: #fff;
-    margin-top: 30px;
+    margin-top: 40px;
     justify-self: center
+}
+
+.signin-main__btn {
+    width: 130px;
+}
+
+.signup-main__text::before,
+.signup-main__text::after {
+    width: 70px;
+}
+
+.signup-main__text::before {
+    left: 5px;
+}
+
+.signup-main__text::after {
+    right: 5px;
+}
+
+.signup-main__btn {
+    width: 160px;
 }
 
 .languages-main {
@@ -872,7 +810,7 @@ input {
 .languages-main__item {
     margin: 10px 10px 10px 0;
     position: relative;
-    margin-left: 15px
+    /* margin-left: 15px */
 }
 
 .languages-main__item::before {
@@ -925,7 +863,8 @@ input {
     font-size: 1rem;
 }
 
-.admin-panel-main__create-chapter, .admin-panel-main__seo-btn {
+.admin-panel-main__create-chapter,
+.admin-panel-main__seo-btn {
     font-family: NunitoBold, sans-serif;
 }
 
@@ -938,6 +877,10 @@ input {
 
 .admin-panel-main__col:nth-child(2) {
     align-self: start;
+}
+
+.admin-panel-main__col:nth-child(3) fieldset {
+    border-top: solid 2px #f5f5f5;
 }
 
 .admin-panel-main__language {
@@ -982,7 +925,8 @@ input {
     margin: 10px 0;
 }
 
-.admin-panel-main__h1, .admin-panel-main__highlightjs {
+.admin-panel-main__h1,
+.admin-panel-main__highlightjs {
     font-weight: 700;
 }
 
@@ -1024,7 +968,8 @@ input {
     cursor: pointer;
 }
 
-.admin-panel-main__create-chapter, .admin-panel-main__seo-btn {
+.admin-panel-main__create-chapter,
+.admin-panel-main__seo-btn {
     width: 130px;
     height: 40px;
     margin: 15px auto 100px auto;
@@ -1035,7 +980,8 @@ input {
     cursor: pointer
 }
 
-.admin-panel-main__task input, .admin-panel-main__seo-input {
+.admin-panel-main__task input,
+.admin-panel-main__seo-input {
     padding-left: 10px;
     width: 100%;
     height: 34px;
@@ -1049,7 +995,8 @@ input {
     border-bottom: solid 2px #f5f5f5;
 }
 
-.admin-panel-main__task-item textarea, .admin-panel-main__seo-input {
+.admin-panel-main__task-item textarea,
+.admin-panel-main__seo-input {
     box-sizing: border-box;
     min-height: 40px;
     width: 100%;
@@ -1061,7 +1008,8 @@ input {
     outline: 0
 }
 
-.admin-panel-main__task-item:nth-child(3) textarea, #description {
+.admin-panel-main__task-item:nth-child(3) textarea,
+#description {
     min-height: 100px;
 }
 
@@ -1092,7 +1040,8 @@ input {
     outline: 0
 }
 
-#title_seo, #title_btns {
+#title_seo,
+#title_btns {
     font-family: NunitoBold, sans-serif;
     font-weight: 700;
 }
@@ -1230,11 +1179,16 @@ input {
     }
 }
 
-.chapter-main-content__title {
+
+.chapter-main-content h1 {
+    font-size: 1.625rem
+}
+
+.chapter-main-conten h2 {
     font-size: 1.5rem
 }
 
-.chapter-main-content__text {
+.chapter-main-content p {
     color: #8694a3
 }
 
@@ -1374,4 +1328,54 @@ input {
     max-width: 670px;
     margin: auto;
     margin: 80px auto 40px auto;
+}
+
+.form-h1 {
+    margin-top: 80px;
+}
+
+.form-input {
+    height: 36px;
+    padding-left: 10px;
+    background: #F6F4FC;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.form-textarea {
+    background: #F6F4FC;
+    max-width: 1210px;
+    height: 262px;
+    resize: vertical;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.form-submit {
+    margin: 5px 0;
+    background-color: #4160EF;
+    height: auto;
+    width: auto;
+    padding: 10px 15px;
+    border-radius: 19px;
+    color: #fff;
+    font-family: 'NunitoBold';
+    font-weight: 700;
+}
+
+.form-responsive {
+    min-height: 80vh;
+}
+
+.form-indent {
+    padding-left: 10px;
+}
+
+.form-error {
+    background: #f66257;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 10px;
 }

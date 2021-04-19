@@ -4,17 +4,17 @@
 <main class="languages-main">
     <div class="container">
         <div class="languages-main__text">
-            <h1>{{lang.name_language}}</h1>
-            <p>{{lang.description_language}}</p>
+            <h1>{{current_language.name_language}}</h1>
+            <p>{{current_language.description_language}}</p>
         </div>
     </div>
-    {% for part in lang.part_list %}
+    {% for part in current_language.part_list %}
         <div class="languages-main__chapters">
             <h1 class="languages-main__title">{{part.name_part}}</h1>
             <div class="container">
                 <div class="languages-main__items grid">
                     {% for chapter in part.chapter_list %}
-                            <a class="languages-main__item" href=" {{url_for('getPart', language=lang.name_language, name_part=part.name_part, number_chapter=loop.index)}} ">{{ chapter.name_chapter }}</a>
+                            <a class="languages-main__item" href=" {{url_for('getPart', language=current_language.name_language, number_part=loop.index, number_chapter=loop.index)}} ">{{ chapter.name_chapter }}</a>
                     {% endfor %}
                 </div>
             </div>

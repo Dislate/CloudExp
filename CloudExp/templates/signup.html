@@ -1,28 +1,32 @@
 {% extends "base.html" %}
 {% block title %}{{name_page}}{% endblock %}
 {% block content %}
-<main class="signup-main grid">
-    <form action="#" method="POST" class="user-form">
-        {{ form.hidden_tag() }}
-        <div class="container">
-            <div class="signup-main__block grid">
-                <h1 class="signup-main__text">РЕГИСТРАЦИЯ</h1>
+    <main class="signup-main grid">
+        <form action="#" method="POST" class="user-form">
+            {{ form.hidden_tag() }}
+            <fieldset class="signup-main__block grid container">
                 {{ form.csrf_token }}
+                <h1 class="signup-main__text">РЕГИСТРАЦИЯ</h1>
                 {% if form.email.errors %}
-                    <p class="signup-main__message bg-red">Invalid Email</p>
+                    {% for error in form.email.errors %}
+                        <p class="signup-main__message bg-red">{{error}}</p>
+                    {% endfor %}
                 {% endif %}
                 {{ form.email(class='signup-main__email', placeholder="Email") }}
                 {% if form.username.errors %}
-                    <p class="signup-main__message bg-red">This nickname is found</p>
+                    {% for error in form.username.errors %}
+                        <p class="signup-main__message bg-red">{{error}}</p>
+                    {% endfor %}
                 {% endif %}
                 {{ form.username(class='signup-main__login', placeholder="Логин") }}
                 {% if form.password.errors %}
-                    <p class="signup-main__message bg-red">Invalid password</p>
+                    {% for error in form.password.errors %}
+                        <p class="signup-main__message bg-red">{{error}}</p>
+                    {% endfor %}
                 {% endif %}
                 {{ form.password(class='signup-main__password', placeholder="Пароль") }}
                 {{ form.submit(class='signup-main__btn') }}
-            </div>
-        </div>
-    </form>
-</main>
+            </fieldset>
+        </form>
+    </main>
 {% endblock %}

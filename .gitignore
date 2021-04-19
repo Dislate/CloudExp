@@ -60,3 +60,4 @@ target/
 /requirements.txt
 /CloudExp/static/libs
 /migrations/versions/*
+/CloudExp/static/robots.txt

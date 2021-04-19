@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{name_page}}{% endblock%}
+{% block content %}
+    <main class="form-responsive container grid">
+        <form action="#" method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset class="grid">
+                {{ form.csrf_token }}
+                <h1 class='form-h1'>Добавление нового языка</h1>
+                {% if form.name_language.errors %}
+                    {% for error in form.name_language.errors %}
+                        <p class="form-error">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+                {% if form.description_language.errors %}
+                    {% for error in form.description_language.errors %}
+                        <p class="form-error">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+                    {{ form.name_language(class='form-input', placeholder="Название языка")}}
+                    {{ form.description_language(class='form-textarea', placeholder="Описание языка")}}
+            </fieldset>
+            {{form.submit(class='form-submit')}}
+        </form>
+    </main>
+{% endblock %}

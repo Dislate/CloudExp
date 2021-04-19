@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{name_page}}{% endblock%}
+{% block content %}
+    <main class="form-responsive container grid">
+        <form action="#" method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset class="grid">
+                {{ form.csrf_token }}
+                <h1 class='form-h1'>Добавление новой главы</h1>
+                {% if form.name_part.errors %}
+                    {% for error in form.name_part.errors %}
+                        <p class="form-error">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+                    {{ form.name_language(class='form-input', placeholder="Название языка", value=language)}}
+                    {{ form.name_part(class='form-input', placeholder="Описание языка")}}
+            </fieldset>
+            {{form.submit(class='form-submit')}}
+        </form>
+    </main>
+{% endblock %}

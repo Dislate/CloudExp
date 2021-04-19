@@ -14,33 +14,19 @@
                                         <button class="admin-panel-main__button">{{part.name_part}}</button>
                                         <ul class="admin-panel-main__chapters hidden">
                                             {% for chapter in part.chapter_list %}
-                                                <li class="admin-panel-main__chapter"><button class="admin-panel-main__button"><a href="/admin-panel?data_input_chapter={{chapter.id_chapter}}">{{chapter.name_chapter}}</a></button></li>
+                                                <li class="admin-panel-main__chapter"><button class="admin-panel-main__button"><a href=" {{url_for('admin_panel', data_input_chapter=chapter.id_chapter)}}">{{chapter.name_chapter}}</a></button></li>
                                             {% endfor %}
-                                            <li class="admin-panel-main__chapter">
-                                                <form action="/admin-panel?data-id-part={{part.id_part}}" method="POST" class="adding">
-                                                    <input class='admin-panel-main__enter' type="text" name='name_chapter' placeholder="Введите название нового части"><br>
-                                                    <input class="admin-panel-main__btn" type="submit" value="+ Добавить" />
-                                                </form>
-                                            </li>
+                                            <li class="admin-panel-main__chapter"><a href="{{url_for('adding_chapter', part=part.name_part)}}">+ Добавить</a></li>
                                         </ul>
                                 {% endfor %}
-                                <li class="admin-panel-main__part">
-                                    <form action="/admin-panel?data-id-lang={{lang.id_language}}" method="POST" class='adding'>
-                                        <input class='admin-panel-main__enter' type="text" name='name_part' placeholder="Введите название нового главы" value=''><br>
-                                        <input class="admin-panel-main__btn" type="submit" value="+ Добавить" />
-                                    </form>
-                                </li>
+                                <li class="admin-panel-main__part"><a href="{{url_for('adding_part', language=lang.name_language)}}">+ Добавить</a></li>
                             </ul>
                     {% endfor %}
-                    <li class="admin-panel-main__language"> 
-                        <form action="#" method="POST" class='adding'>
-                            <input class='admin-panel-main__enter' type="text" name='name_language' placeholder="Введи название нового языка"><br>
-                            <input class="admin-panel-main__btn" type="submit" value="+ Добавить" />
-                        </form>
-                    </li>
+                    <li class="admin-panel-main__language"><a href="{{url_for('adding_language')}}">+ Добавить</a></li>
                 </ul>
             </div>
             <div class="admin-panel-main__col grid">
+                <h1>{{obj_chapter.name_chapter}}</h1>
                 <form class="admin-panel-main__col grid" action="#" method="POST">
                     <textarea id="admin-panel-main__text-chapter" name='text_chapter'>{{obj_chapter.text_chapter | safe}}</textarea>
                     <h2 class="admin-panel-main__tasks-title">Задачи</h2>

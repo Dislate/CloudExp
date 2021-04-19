@@ -20,6 +20,9 @@ class users(db.Model, UserMixin):
         self.email = email
         self.privilages = privilages
 
+    def __repr__(self):
+        return f"users('{self.id}', '{self.name}', '{self.email}', '{self.privilages}')"
+
 class languages(db.Model):
     __tablename__ = 'languages'
     id_language = db.Column(db.Integer, primary_key=True)
@@ -31,29 +34,39 @@ class languages(db.Model):
         self.name_language = name_language
         self.description_language = description_language
 
+    def __repr__(self):
+        return f"languages('{self.id_language}', '{self.name_language}', '{self.description_language}')"
+
 class parts(db.Model):
     __tablename__ = 'parts'
     id_part = db.Column(db.Integer, primary_key=True)
     language_id = db.Column(db.Integer, db.ForeignKey('languages.id_language', ondelete="CASCADE"))
-    name_part = db.Column(db.String(50))
+    name_part = db.Column(db.String(50), nullable=False)
     chapter_list = db.relationship('chapters', backref='parts', passive_deletes=True, lazy='dynamic')
 
     def __init__(self, language_id, name_part):
         self.language_id = language_id
         self.name_part = name_part
 
+    def __repr__(self):
+        return f"parts('{self.id_part}', '{self.language_id}', '{self.name_part}')"
+
 class chapters(db.Model):
     __tablename__ = 'chapters'
     id_chapter = db.Column(db.Integer, primary_key=True)
     part_id = db.Column(db.Integer, db.ForeignKey('parts.id_part', ondelete="CASCADE"))
-    name_chapter = db.Column(db.String(50))
+    name_chapter = db.Column(db.String(50), nullable=False)
     text_chapter = db.Column(db.String(5000))
     task_list = db.relationship('tasks', backref='chapter', passive_deletes=True, lazy='dynamic')
     seo = db.relationship('seo', backref='chapter', uselist=False, passive_deletes=True)
+    
     def __init__(self, part_id, name_chapter, text_chapter):
         self.part_id = part_id
         self.name_chapter = name_chapter
         self.text_chapter = text_chapter
+    
+    def __repr__(self):
+        return f"chapters('{self.id_chapter}', '{self.part_id}', '{self.name_chapter}', '{self.text_chapter}')"
     
 class tasks(db.Model):
     id_task = db.Column('id_task', db.Integer, primary_key=True)
@@ -70,6 +83,9 @@ class tasks(db.Model):
         self.solution = solution
         self.hint = hint
 
+    def __repr__(self):
+        return f"tasks('{self.chapter_id}', '{self.name_task}', '{self.text_task}', '{self.solution}', '{self.hint}')"
+
 class seo(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id_chapter', ondelete='CASCADE'))
@@ -80,3 +96,6 @@ class seo(db.Model):
         self.chapter_id = chapter_id
         self.keywords = keywords
         self.description = description
+
+    def __repr__(self): 
+        return f"seo('{self.chapter_id}', '{self.keywords}', '{self.description}')"

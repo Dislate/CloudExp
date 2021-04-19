@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}{{name_page}}{% endblock%}
+{% block content %}
+    <main class="form-responsive container grid">
+        <form action="#" method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset class="grid">
+                {{ form.csrf_token }}
+                <h1 class='form-h1'>Добавление новой части</h1>
+                {% if form.name_part.errors %}
+                    {% for error in form.name_part.errors %}
+                        <p class="form-error">{{error}}</p>
+                    {% endfor %}
+                {% elif form.name_chapter.errors %}
+                    {% for errors in form.name_chapter.errors %}
+                        <p class="form-error">{{error}}</p>
+                    {% endfor %}
+                {% endif %}
+                    {{ form.name_part(class='form-input', placeholder='Название части', value=part)}}
+                    {{ form.name_chapter(class='form-input', placeholder="Название главы")}}
+                    {{ form.text_chapter(class='form-textarea', placeholder="Текст главы")}}
+            </fieldset>
+            {{form.submit(class='form-submit')}}
+        </form>
+    </main>
+{% endblock %}
