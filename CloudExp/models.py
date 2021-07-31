@@ -7,7 +7,10 @@ def load_user(user_id):
     return users.query.get(int(user_id))
 
 class users(db.Model, UserMixin):
+    # TODO: исправить именования класса
+
     __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(60))
@@ -23,8 +26,11 @@ class users(db.Model, UserMixin):
     def __repr__(self):
         return f"users('{self.id}', '{self.name}', '{self.email}', '{self.privilages}')"
 
+
 class languages(db.Model):
+
     __tablename__ = 'languages'
+
     id_language = db.Column(db.Integer, primary_key=True)
     name_language = db.Column(db.String(40), unique=True)
     description_language = db.Column(db.String(1500))
@@ -36,6 +42,7 @@ class languages(db.Model):
 
     def __repr__(self):
         return f"languages('{self.id_language}', '{self.name_language}', '{self.description_language}')"
+
 
 class parts(db.Model):
     __tablename__ = 'parts'
@@ -50,6 +57,7 @@ class parts(db.Model):
 
     def __repr__(self):
         return f"parts('{self.id_part}', '{self.language_id}', '{self.name_part}')"
+
 
 class chapters(db.Model):
     __tablename__ = 'chapters'
@@ -67,7 +75,8 @@ class chapters(db.Model):
     
     def __repr__(self):
         return f"chapters('{self.id_chapter}', '{self.part_id}', '{self.name_chapter}', '{self.text_chapter}')"
-    
+
+
 class tasks(db.Model):
     id_task = db.Column('id_task', db.Integer, primary_key=True)
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id_chapter', ondelete='CASCADE'))
@@ -85,6 +94,7 @@ class tasks(db.Model):
 
     def __repr__(self):
         return f"tasks('{self.chapter_id}', '{self.name_task}', '{self.text_task}', '{self.solution}', '{self.hint}')"
+
 
 class seo(db.Model):
     id = db.Column('id', db.Integer, primary_key=True)
