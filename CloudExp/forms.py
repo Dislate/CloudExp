@@ -2,11 +2,11 @@ import logging
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
-from CloudExp.models import users, languages, parts
+from CloudExp.models import User, Language, Part
 
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+logging.basicConfig(filename='forms_logs.log', level=logging.DEBUG)
+logger_forms = logging.getLogger(__name__)
 
 
 class RegistrationForm(FlaskForm):
@@ -16,13 +16,15 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Присоединиться')
 
     def validate_username(self, username):
-        user = users.query.filter_by(name=username.data).first()
+        user = User.query.filter_by(name=username.data).first()
         if user:
+            logger_forms.info("Name is taken")
             raise ValidationError('Это имя занято')
 
     def validate_email(self, email):
-        email = users.query.filter_by(email=email.data).first()
+        email = User.query.filter_by(email=email.data).first()
         if email:
+            logger_forms.info("Email is taken")
             raise ValidationError('Эта почта уже используется')
 
 
@@ -32,8 +34,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Вход')
 
     def validate_username(self, username):
-        user = users.query.filter_by(name=username.data).first()
+        user = User.query.filter_by(name=username.data).first()
         if not user:
+            logger_forms.info("Name is not found")
             raise ValidationError('Пользователь не найден')
 
 
@@ -43,7 +46,8 @@ class AddingLanguage(FlaskForm):
     submit = SubmitField('Добавить')
 
     def validate_name_language(self, name_language):
-        if languages.query.filter_by(name_language=name_language.data).first():
+        if Language.query.filter_by(name_language=name_language.data).first():
+            logger_forms.info("This language already exists")
             raise ValidationError('Такой язык уже есть')
 
 
@@ -60,9 +64,9 @@ class AddingChapter(FlaskForm):
     submit = SubmitField('Добавить')
 
     def validate_name_part(self, name_part):
-        current_part = parts.query.filter_by(name_part=name_part.data).first()
+        current_part = Part.query.filter_by(name_part=name_part.data).first()
         try:
             current_part.name_chapter
-        except Exception as err:
-            logger.exception(err)
+        except AttributeError as err:
+            logger_forms.exception(err)
             raise ValidationError('Такой части не существует')
