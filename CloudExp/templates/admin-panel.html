@@ -26,12 +26,12 @@
                 </ul>
             </div>
             <div class="admin-panel-main__col grid">
-                <h1>{{obj_chapter.name_chapter}}</h1>
+                <h1>{{current_chapter.name_chapter}}</h1>
                 <form class="admin-panel-main__col grid" action="#" method="POST">
-                    <textarea id="admin-panel-main__text-chapter" name='text_chapter'>{{obj_chapter.text_chapter | safe}}</textarea>
+                    <textarea id="admin-panel-main__text-chapter" name='text_chapter'>{{current_chapter.text_chapter | safe}}</textarea>
                     <h2 class="admin-panel-main__tasks-title">Задачи</h2>
-                    {% if obj_chapter.task_list %}
-                        {% for task in obj_chapter.task_list %}
+                    {% if current_chapter.task_list %}
+                        {% for task in current_chapter.task_list %}
                             <div class="admin-panel-main__task">
                                 <div class="admin-panel-main__task-item">
                                     <label for='name_task_{{loop.index}}' class="admin-panel-main__name-task">Название задачи #{{loop.index}}</label>
@@ -49,11 +49,11 @@
                                     <label for='hint_task_{{loop.index}}' class="admin-panel-main__hint-task">Подсказка</label>
                                     <textarea class="admin-panel-main__input-task" type="text" name='hint_task_{{loop.index}}' id='hint_task_{{loop.index}}'>{{task.hint}}</textarea>
                                 </div>
-                                <button class="admin-panel-main__delete-task-btn"><a href="/admin-panel?current_chapter={{obj_chapter.id_chapter}}&delete_task={{loop.index}}">- Удалить задачу</a></button>
+                                <button class="admin-panel-main__delete-task-btn"><a href="{{url_for('delete_task', current_chapter=current_chapter.id_chapter, delete_task=loop.index)}}">- Удалить задачу</a></button>
                             </div>
                         {% endfor %}
                     {% endif%}
-                    <button class='admin-panel-main__add-task-btn'><a href="/admin-panel?adding_task={{obj_chapter.id_chapter}}">+ Добавить задачу</a></button>
+                    <button class='admin-panel-main__add-task-btn'><a href="{{url_for('adding_task', current_chapter=current_chapter.id_chapter)}}">+ Добавить задачу</a></button>
                     <button class="admin-panel-main__create-chapter">Обновить</button>
                 </form>
             </div>
@@ -73,9 +73,9 @@
                     <fieldset class="admin-panel-main__seo">
                         <legend id='title_seo'>SEO</legend>
                         <label for="keywords" class="admin-panel-main__seo-item">Ключевые слова</label>
-                        <input type="text" id='keywords' class='admin-panel-main__seo-input' name='keywords_chapter' value='{{obj_chapter.seo.keywords}}'>
+                        <input type="text" id='keywords' class='admin-panel-main__seo-input' name='keywords_chapter' value='{{current_chapter.seo.keywords}}'>
                         <label for="description" class="admin-panel-main__seo-item">Описание</label>
-                        <textarea type="text" id='description' class='admin-panel-main__seo-input' name='description_chapter'>{{obj_chapter.seo.description}}</textarea>
+                        <textarea type="text" id='description' class='admin-panel-main__seo-input' name='description_chapter'>{{current_chapter.seo.description}}</textarea>
                         <button type="submit" class='admin-panel-main__seo-btn'>Обновить</button>
                     </fieldset>
                 </form>

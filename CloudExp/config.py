@@ -1,7 +1,7 @@
 import json
 
 
-with open('cloude/config.json') as config_file:
+with open('CloudExp/config.json') as config_file:
     config = json.load(config_file)
 
 

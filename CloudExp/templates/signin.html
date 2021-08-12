@@ -2,28 +2,29 @@
 {% block title %}{{name_page}}{% endblock %}
 
 {% block content %}
-    <main class="signin-main grid">
-        <form action="#" method="POST" class="user-form">
-            {{ form.hidden_tag() }}
-            <fieldset class="signin-main__block grid container">
-                {{ form.csrf_token }}
-                <h1 class="signin-main__text">ВХОД</h1>
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for msg in messages %}
-                            <p class="signup-main__message bg-red">{{msg}}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                {% if form.username.errors %}
-                    {% for error in form.username.errors %}
-                        <p class="signup-main__message bg-red">{{error}}</p>
-                    {% endfor %}
-                {% endif %}
-                    {{ form.username(class="signin-main__login", placeholder="Логин")}}
-                    {{ form.password(class="signin-main__password", placeholder="Пароль")}}
-            </fieldset>
-            {{ form.submit(class='signin-main__btn') }}
-        </form>
-    </main>
+<main class="signin-main grid">
+    <form action="#" method="POST" class="user-form">
+        {{ form.hidden_tag() }}
+        <fieldset class="signin-main__block grid container">
+            {{ form.csrf_token }}
+            <h1 class="signin-main__text">ВХОД</h1>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for msg in messages %}
+            <p class="signup-main__message bg-red">{{msg}}</p>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            {% if form.username.errors %}
+            {% for error in form.username.errors %}
+            <p class="signup-main__message bg-red">{{error}}</p>
+            {% endfor %}
+            {% endif %}
+            {{ form.username(class="signin-main__login", placeholder="Логин")}}
+            {{ form.password(class="signin-main__password", placeholder="Пароль")}}
+            <input type="hidden" name="next" value="{{ request.args.get('next', '') }}"/>
+        </fieldset>
+        {{ form.submit(class='signin-main__btn') }}
+    </form>
+</main>
 {% endblock %}

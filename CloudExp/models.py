@@ -8,10 +8,7 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
-    # TODO: исправить именования класса
-
     __tablename__ = 'user'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(60))
@@ -25,13 +22,11 @@ class User(db.Model, UserMixin):
         self.privilages = privilages
 
     def __repr__(self):
-        return f"user('{self.id}', '{self.name}', '{self.email}', '{self.privilages}')"
+        return f"<user('{self.id}', '{self.name}', '{self.email}', '{self.privilages}')>"
 
 
 class Language(db.Model):
-
     __tablename__ = 'language'
-
     id_language = db.Column(db.Integer, primary_key=True)
     name_language = db.Column(db.String(40), unique=True)
     description_language = db.Column(db.String(1500))
@@ -42,13 +37,11 @@ class Language(db.Model):
         self.description_language = description_language
 
     def __repr__(self):
-        return f"languages('{self.id_language}', '{self.name_language}', '{self.description_language}')"
+        return f"<languages('{self.id_language}', '{self.name_language}', '{self.description_language}')>"
 
 
 class Part(db.Model):
-
     __tablename__ = 'part'
-
     id_part = db.Column(db.Integer, primary_key=True)
     language_id = db.Column(db.Integer, db.ForeignKey('language.id_language', ondelete="CASCADE"))
     name_part = db.Column(db.String(50), nullable=False)
@@ -59,13 +52,11 @@ class Part(db.Model):
         self.name_part = name_part
 
     def __repr__(self):
-        return f"parts('{self.id_part}', '{self.language_id}', '{self.name_part}')"
+        return f"<parts('{self.id_part}', '{self.language_id}', '{self.name_part}')>"
 
 
 class Chapter(db.Model):
-
     __tablename__ = 'chapter'
-
     id_chapter = db.Column(db.Integer, primary_key=True)
     part_id = db.Column(db.Integer, db.ForeignKey('part.id_part', ondelete="CASCADE"))
     name_chapter = db.Column(db.String(50), nullable=False)
@@ -79,13 +70,11 @@ class Chapter(db.Model):
         self.text_chapter = text_chapter
 
     def __repr__(self):
-        return f"chapters('{self.id_chapter}', '{self.part_id}', '{self.name_chapter}', '{self.text_chapter}')"
+        return f"<chapters('{self.id_chapter}', '{self.part_id}', '{self.name_chapter}', '{self.text_chapter}')>"
 
 
 class Task(db.Model):
-
     __tablename__ = 'task'
-
     id_task = db.Column('id_task', db.Integer, primary_key=True)
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapter.id_chapter', ondelete='CASCADE'))
     name_task = db.Column(db.String(100))
@@ -101,13 +90,11 @@ class Task(db.Model):
         self.hint = hint
 
     def __repr__(self):
-        return f"task('{self.chapter_id}', '{self.name_task}', '{self.text_task}', '{self.solution}', '{self.hint}')"
+        return f"<task('{self.chapter_id}', '{self.name_task}', '{self.text_task}', '{self.solution}', '{self.hint}')>"
 
 
 class Seo(db.Model):
-
     __tablename__ = 'seo'
-
     id = db.Column('id', db.Integer, primary_key=True)
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapter.id_chapter', ondelete='CASCADE'))
     keywords = db.Column(db.String(50))
@@ -119,4 +106,4 @@ class Seo(db.Model):
         self.description = description
 
     def __repr__(self):
-        return f"seo('{self.chapter_id}', '{self.keywords}', '{self.description}')"
+        return f"<seo('{self.chapter_id}', '{self.keywords}', '{self.description}')>"

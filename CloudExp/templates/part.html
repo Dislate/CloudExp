@@ -15,7 +15,7 @@
             <h3 class="chapter-main-sidebar__title">{{number_part.name_part}}</h3>
             <ul class="chapter-main-sidebar__list">
                 {% for chapter in number_part.chapter_list %}
-                    <li class="chapter-main-sidebar__list-item"><a class="chapter-main-sidebar__list-link" href="{{url_for('getPart', language=current_language.name_language, number_part=loop.index, number_chapter=loop.index)}}">- {{chapter.name_chapter}}</a></li>
+                    <li class="chapter-main-sidebar__list-item"><a class="chapter-main-sidebar__list-link" href="{{url_for('get_part', language=current_language.name_language, number_part=loop.index, number_chapter=loop.index)}}">- {{chapter.name_chapter}}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -24,11 +24,11 @@
             {{chapter.text_chapter | safe}}
             <div class="tasks">
                 {% if task_list != '' %}
-                    <h1 class="tasks__header">Задачи</h5>
+                    <h1 class="tasks__header">Задачи</h1>
                     {% for task in task_list %}
                         <div class="task">
-                            <h2 class="task__header">Задача {{loop.index}}</h6>
-                            <h3 class='task__name'>{{task.name_task}}</h4>
+                            <h2 class="task__header">Задача {{loop.index}}</h2>
+                            <h3 class='task__name'>{{task.name_task}}</h3>
                             <p class="task__content">{{task.text_task}}</p>
                             <div class="task__solution">
                                 <div class="task__solution-code hidden">{{task.solution | safe}}</div>

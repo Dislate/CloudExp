@@ -13,7 +13,7 @@
   <nav class="mobile-nav none"><button class="hamburger"></button>
     <ul class="mobile-nav__list">
       {% for lang in languages_list %}
-        <li><a href="{{ url_for('getLanguage', language=lang.name_language) }}">{{lang.name_language}}</a></li>
+        <li><a href="{{ url_for('get_language', language=lang.name_language) }}">{{lang.name_language}}</a></li>
       {% endfor %}
     </ul>
     <ul class="mobile-nav__auth-btns grid">
@@ -38,7 +38,7 @@
         <nav class="top-line__nav">
           <ul>
             {% for lang in languages_list %}
-              <li><a href="{{ url_for('getLanguage', language=lang.name_language) }}">{{lang.name_language}}</a></li>
+              <li><a href="{{ url_for('get_language', language=lang.name_language) }}">{{lang.name_language}}</a></li>
             {% endfor %}
           </ul>
         </nav>
