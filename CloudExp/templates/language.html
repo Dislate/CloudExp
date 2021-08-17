@@ -14,7 +14,7 @@
             <div class="container">
                 <div class="languages-main__items grid">
                     {% for chapter in part.chapter_list %}
-                            <a class="languages-main__item" href=" {{url_for('get_part', language=current_language.name_language, number_part=loop.index, number_chapter=loop.index)}} ">{{ chapter.name_chapter }}</a>
+                            <a class="languages-main__item" href="{{chapter.get_absolute_url()}}">{{ chapter.name_chapter }}</a>
                     {% endfor %}
                 </div>
             </div>

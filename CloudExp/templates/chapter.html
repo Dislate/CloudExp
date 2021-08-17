@@ -5,23 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href=" {{url_for('static', filename='img/favicon.png')}} " type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-<meta name='keywords' content="{{chapter.seo.keywords}}">
-<meta name='description' content="{{chapter.seo.description}}">
+<meta name='keywords' content="{{current_chapter.seo.keywords}}">
+<meta name='description' content="{{current_chapter.seo.description}}">
 {% endblock %}
 {% block content %}
 <main class="chapter-main">
     <div class="container chapter-main__container grid">
         <div class="chapter-main-sidebar">
-            <h3 class="chapter-main-sidebar__title">{{number_part.name_part}}</h3>
+            <h3 class="chapter-main-sidebar__title">{{current_part.name_part}}</h3>
             <ul class="chapter-main-sidebar__list">
-                {% for chapter in number_part.chapter_list %}
-                    <li class="chapter-main-sidebar__list-item"><a class="chapter-main-sidebar__list-link" href="{{url_for('get_part', language=current_language.name_language, number_part=loop.index, number_chapter=loop.index)}}">- {{chapter.name_chapter}}</a></li>
+                {% for chapter in current_part.chapter_list %}
+                    <li class="chapter-main-sidebar__list-item"><a class="chapter-main-sidebar__list-link" href="{{chapter.get_absolute_url()}}">- {{chapter.name_chapter}}</a></li>
                 {% endfor %}
             </ul>
         </div>
         <div class="chapter-main-content">
-            <h1 class="chapter-main-content__title">{{chapter.name_chapter}}</h1>
-            {{chapter.text_chapter | safe}}
+            <h1 class="chapter-main-content__title">{{current_chapter.name_chapter}}</h1>
+            {{current_chapter.text_chapter | safe}}
             <div class="tasks">
                 {% if task_list != '' %}
                     <h1 class="tasks__header">Задачи</h1>

@@ -39,7 +39,7 @@ class LoginForm(FlaskForm):
             raise ValidationError('Пользователь не найден')
 
 
-class AddingLanguage(FlaskForm):
+class AddingLanguageForm(FlaskForm):
     name_language = StringField('Название языка', validators=[DataRequired(), Length(min=2, max=40)])
     description_language = TextAreaField('Описание языка', validators=[DataRequired(), Length(min=10, max=1500)])
     submit = SubmitField('Добавить')
@@ -50,13 +50,13 @@ class AddingLanguage(FlaskForm):
             raise ValidationError('Такой язык уже есть')
 
 
-class AddingPart(FlaskForm):
+class AddingPartForm(FlaskForm):
     name_language = StringField('Название части')
     name_part = StringField('Название части', validators=[DataRequired(), Length(min=3, max=50)])
     submit = SubmitField('Добавить')
 
 
-class AddingChapter(FlaskForm):
+class AddingChapterForm(FlaskForm):
     name_part = StringField('Название части', validators=[DataRequired()])
     name_chapter = StringField('Название главы', validators=[DataRequired(), Length(min=3, max=50)])
     text_chapter = TextAreaField('Текст главы', validators=[Length(min=0, max=5000)])

@@ -1,5 +1,5 @@
 from CloudExp import db
-from flask import url_for, redirect, render_template
+from flask import url_for, redirect
 
 
 def save_in_db(obj, template=None, delete=False, redirect_to_page=True, **kwargs):

@@ -3,7 +3,7 @@ from flask import redirect, url_for, render_template, request, flash, send_from_
 from flask_login import login_user, current_user, logout_user
 from CloudExp import app, db, bcrypt
 from CloudExp.models import User, Language, Part, Chapter, Task, Seo
-from CloudExp.forms import RegistrationForm, LoginForm, AddingLanguage, AddingPart, AddingChapter
+from CloudExp.forms import RegistrationForm, LoginForm, AddingLanguageForm, AddingPartForm, AddingChapterForm
 from CloudExp.helper import save_in_db
 from CloudExp.decorators import login_required
 
@@ -35,46 +35,6 @@ def agreement():
     return render_template("agreement.html")
 
 
-@app.route('/admin-panel', methods=['POST'])
-@login_required
-def admin_panel_post():
-    if request.method == 'POST':
-        # TODO сделать форму для seo
-        try:
-            keywords = request.form['keywords_chapter']
-            description = request.form['description_chapter']
-        except:
-            pass
-        else:
-            if request.args.get('data_input_chapter'):
-                chapter = Chapter.query.filter_by(id_chapter=request.args.get('data_input_chapter')).first()
-            else:
-                chapter = Chapter.query.first()
-
-            chapter.seo.keywords = keywords
-            chapter.seo.description = description
-            db.session.commit()
-            return redirect(url_for('admin_panel_post', data_input_chapter=chapter.id_chapter))
-
-        # TODO сделать формы для главы и задач
-        text_chapter = request.form['text_chapter']
-        request_chapter = request.args.get('data_input_chapter')
-        if request_chapter:
-            current_chapter = Chapter.query.filter_by(id_chapter=request_chapter).first()
-        else:
-            current_chapter = Chapter.query.first()
-        current_chapter.text_chapter = text_chapter
-        # rewriting task fields
-        for index, task in enumerate(current_chapter.task_list):
-            task.name_task = request.form['name_task_' + str(index + 1)]
-            task.text_task = request.form['text_task_' + str(index + 1)]
-            task.solution = request.form['solution_task_' + str(index + 1)]
-            task.hint = request.form['hint_task_' + str(index + 1)]
-        db.session.commit()
-        return redirect(url_for('admin_panel_post', data_input_chapter=request_chapter))
-    return Response(status=404)
-
-
 @app.route('/admin-panel', methods=['GET'])
 @login_required
 def admin_panel():
@@ -86,7 +46,7 @@ def admin_panel():
                 current_chapter = Chapter.query.filter_by(id_chapter=data).first()
 
             if not current_chapter.seo:
-                add_seo_for_chapter = Seo(current_chapter.id_chapter, None, None)
+                add_seo_for_chapter = Seo(current_chapter.id_chapter, '', '')
                 save_in_db(add_seo_for_chapter, redirect_to_page=False)
 
             return render_template('admin-panel.html', langs=Language.query.all(),
@@ -96,6 +56,51 @@ def admin_panel():
                                    current_chapter=None, name_page='Админ-панель')
     else:
         return Response(status=403)
+
+
+@app.route('/admin-panel/update-chapter-tasks', methods=["POST"])
+@login_required
+def update_chapter_tasks():
+    if request.method == 'POST':
+        text_chapter = request.form['text_chapter']
+        request_chapter = request.args.get('data_input_chapter', type=int)
+        current_chapter = Chapter.query.first()
+        if request_chapter:
+            current_chapter = Chapter.query.filter_by(id_chapter=request_chapter).first()
+        current_chapter.text_chapter = text_chapter
+        for index, task in enumerate(current_chapter.task_list):
+            task.name_task = request.form[f'name_task_{index + 1}']
+            task.text_task = request.form[f'text_task_{index + 1}']
+            task.solution = request.form[f'solution_task_{index + 1}']
+            task.hint = request.form[f'hint_task_{index + 1}']
+        db.session.commit()
+        return redirect(url_for('admin_panel', data_input_chapter=current_chapter.id_chapter))
+    return Response(status=404)
+
+
+@app.route('/admin-panel/update-seo', methods=['POST'])
+@login_required
+def update_seo():
+    if request.method == 'POST':
+        keywords = request.form['keywords_chapter']
+        description = request.form['description_chapter']
+
+        chapter = Chapter.query.first()
+        if request.args.get('data_input_chapter'):
+            chapter = Chapter.query.filter_by(id_chapter=request.args.get('data_input_chapter')).first()
+
+        chapter.seo.keywords = keywords
+        chapter.seo.description = description
+        db.session.commit()
+        return redirect(url_for('admin_panel', data_input_chapter=chapter.id_chapter))
+
+
+@app.route('/admin-panel/adding-task', methods=['GET'])
+@login_required
+def adding_task():
+    id_chapter = request.args.get('current_chapter')
+    new_task = Task(int(id_chapter), '', '', '', '')
+    return save_in_db(new_task, 'admin_panel', data_input_chapter=id_chapter)
 
 
 @app.route('/admin-panel/delete-task', methods=['GET'])
@@ -109,18 +114,10 @@ def delete_task():
     return save_in_db(current_task, 'admin_panel', delete=True, data_input_chapter=id_chapter)
 
 
-@app.route('/admin-panel/adding-task', methods=['GET'])
-@login_required
-def adding_task():
-    id_chapter = request.args.get('current_chapter')
-    new_task = Task(int(id_chapter), '', '', '', '')
-    return save_in_db(new_task, 'admin_panel', data_input_chapter=id_chapter)
-
-
 @app.route('/adding-language', methods=['GET', 'POST'])
 def adding_language():
     if current_user.is_authenticated and current_user.privilages == 'is_admin':
-        add_lang_form = AddingLanguage()
+        add_lang_form = AddingLanguageForm()
 
         if add_lang_form.validate_on_submit():
             new_language = Language(add_lang_form.name_language.data, add_lang_form.description_language.data)
@@ -134,13 +131,13 @@ def adding_language():
 def adding_part():
     if current_user.is_authenticated and current_user.privilages == 'is_admin':
 
-        add_part_form = AddingPart()
+        add_part_form = AddingPartForm()
 
         if add_part_form.validate_on_submit():
             new_part = Part(Language.query.filter_by(
                 name_language=add_part_form.name_language.data).first().id_language, add_part_form.name_part.data)
             return save_in_db(new_part, 'admin-panel')
-        return render_template('adding-part.html', form=add_part_form, language=request.args.get('language'))
+        return render_template('adding-chapter.html', form=add_part_form, language=request.args.get('language'))
     else:
         return Response(status=401)
 
@@ -149,7 +146,7 @@ def adding_part():
 def adding_chapter():
     if current_user.is_authenticated and current_user.privilages == 'is_admin':
 
-        add_chapter_form = AddingChapter()
+        add_chapter_form = AddingChapterForm()
         if add_chapter_form.validate_on_submit():
             new_chapter = Chapter(Part.query.filter_by(
                 name_part=add_chapter_form.name_part.data).first().id_part,
@@ -170,26 +167,25 @@ def get_language(language):
         return render_template('language.html',
                                current_language=current_language,
                                name_page=current_language.name_language)
-    else:
-        return redirect(url_for('home'))
+    return Response(status=404)
 
 
-@app.route('/<language>/<number_part>/<number_chapter>', methods=['GET'])
-def get_part(language, number_part, number_chapter):
+@app.route('/<language>/<name_part>/<name_chapter>', methods=['GET'])
+def get_chapter(language, name_part, name_chapter):
     current_language = Language.query.filter_by(name_language=language).first()
-    number_part = current_language.part_list[int(number_part) - 1]
-    number_chapter = number_part.chapter_list[int(number_chapter) - 1]
-    name_page = f"{current_language.name_language} - {number_chapter.name_chapter}"
+    current_part = current_language.part_list.filter_by(name_part=name_part).first()
+    current_chapter = current_part.chapter_list.filter_by(name_chapter=name_chapter).first()
+    name_page = f"{current_language.name_language} - {current_chapter.name_chapter}"
 
     task_list = None
-    if Chapter.task_list[0]:
-        task_list = Chapter.task_list
+    if Chapter.task_list:
+        task_list = current_chapter.task_list
 
-    if current_language and number_part:
-        return render_template('part.html',
+    if current_language and current_part:
+        return render_template('chapter.html',
                                current_language=current_language,
-                               number_part=number_part,
-                               chapter=number_chapter,
+                               current_part=current_part,
+                               current_chapter=current_chapter,
                                name_page=name_page,
                                task_list=task_list)
     else:

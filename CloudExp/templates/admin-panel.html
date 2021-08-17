@@ -25,9 +25,10 @@
                     <li class="admin-panel-main__language"><a href="{{url_for('adding_language')}}">+ Добавить</a></li>
                 </ul>
             </div>
+            {% if current_chapter %}
             <div class="admin-panel-main__col grid">
                 <h1>{{current_chapter.name_chapter}}</h1>
-                <form class="admin-panel-main__col grid" action="#" method="POST">
+                <form class="admin-panel-main__col grid" action="/admin-panel/update-chapter-tasks?data_input_chapter={{request.args.get('data_input_chapter')}}" method="POST">
                     <textarea id="admin-panel-main__text-chapter" name='text_chapter'>{{current_chapter.text_chapter | safe}}</textarea>
                     <h2 class="admin-panel-main__tasks-title">Задачи</h2>
                     {% if current_chapter.task_list %}
@@ -69,7 +70,7 @@
                     <button class="admin-panel-main__img admin-panel-main__add-btn">+ Изображение</button>
                     <button class="admin-panel-main__highlightjs admin-panel-main__add-btn">+ Вставить highlight-код</button>
                 </fieldset>
-                <form class="admin-panel-main__seo-from" action="#" method="POST">
+                <form class="admin-panel-main__seo-from" action="/admin-panel/update-seo?data_input_chapter={{request.args.get('data_input_chapter')}}" method="POST">
                     <fieldset class="admin-panel-main__seo">
                         <legend id='title_seo'>SEO</legend>
                         <label for="keywords" class="admin-panel-main__seo-item">Ключевые слова</label>
@@ -80,6 +81,9 @@
                     </fieldset>
                 </form>
             </div>
+            {% else %}
+            <h1>Глав пока нет</h1>
+            {% endif %}
         </div>
     </main> 
 {% endblock %}
