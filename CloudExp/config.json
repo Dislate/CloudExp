@@ -1,5 +1,5 @@
 {
-    "SECRET_KEY": "Your secret key",
-    "SQLALCHEMY_DATABASE_URI": "mysql+pymysql://user:password@localhost/name_table",
+    "SECRET_KEY": "b213d29c14a94f56b69607a944b1b23e",
+    "SQLALCHEMY_DATABASE_URI": "mysql+pymysql://test:test@db/cloudexp",
     "SQLALCHEMY_TRACK_MODIFICATIONS": "False"
 }

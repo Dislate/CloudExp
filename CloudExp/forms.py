@@ -2,7 +2,7 @@ import logging
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, ValidationError
-from CloudExp.models import User, Language, Part
+from CloudExp.models import User, Language, Part, Chapter
 
 logging.basicConfig(filename='forms_logs.log', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -66,7 +66,7 @@ class AddingChapterForm(FlaskForm):
         current_part = Part.query.filter_by(name_part=name_part.data).first()
         try:
             current_part.name_part
-            logger.info('Новая глава создана')
+            logger.info('Новая часть создана')
         except AttributeError as err:
             logger.exception(err)
-            raise ValidationError('Такой части не существует')
+            # raise ValidationError('Такой части не существует')

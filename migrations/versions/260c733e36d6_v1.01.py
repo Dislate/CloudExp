@@ -16,14 +16,14 @@ depends_on = None
 
 # My migrations script
 def upgrade():
-    op.drop_constraint('parts_ibfk_1', 'parts',
-                       type_='foreignkey')
-    op.drop_constraint('chapters_ibfk_1', 'chapters',
-                       type_='foreignkey')
-    op.drop_constraint('tasks_ibfk_1', 'tasks',
-                       type_='foreignkey')
-    op.drop_constraint('seo_ibfk_1', 'seo',
-                       type_='foreignkey')
+    # op.drop_constraint('parts_ibfk_1', 'parts',
+    #                    type_='foreignkey')
+    # op.drop_constraint('chapters_ibfk_1', 'chapters',
+    #                    type_='foreignkey')
+    # op.drop_constraint('tasks_ibfk_1', 'tasks',
+    #                    type_='foreignkey')
+    # op.drop_constraint('seo_ibfk_1', 'seo',
+    #                    type_='foreignkey')
 
     op.rename_table("users", "user")
     op.rename_table("languages", "language")
