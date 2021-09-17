@@ -18,8 +18,6 @@ convention = {
     "pk": "pk_%(table_name)s"
 }
 
-projectDir = dirname(__file__)
-
 app = Flask(__name__)
 app.config.from_object(Config)
 app.permanent_session_lifetime = timedelta(days=1)
@@ -29,6 +27,7 @@ db = SQLAlchemy(app, metadata=metadata)
 
 migrate = Migrate(app, db)
 manager = Manager(app)
+
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
