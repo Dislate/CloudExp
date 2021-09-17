@@ -61,3 +61,6 @@ target/
 
 # Pycharm
 .idea/
+
+# my testconfig
+/CloudExp/myconfig.json

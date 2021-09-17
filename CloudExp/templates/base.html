@@ -11,11 +11,13 @@
 </head>
 <body>
   <nav class="mobile-nav none"><button class="hamburger"></button>
-    <ul class="mobile-nav__list">
-      {% for lang in languages_list %}
-        <li><a href="{{lang.get_absolute_url()}}">{{lang.name_language}}</a></li>
-      {% endfor %}
-    </ul>
+    {% if languages_list %}
+      <ul class="mobile-nav__list">
+        {% for lang in languages_list %}
+          <li><a href="{{lang.get_absolute_url()}}">{{lang.name_language}}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
     <ul class="mobile-nav__auth-btns grid">
       {% if current_user.is_authenticated %}
         {% if current_user.privilages == 'is_admin' %}
@@ -34,14 +36,17 @@
       <div class="container top-line__container grid">
         <div class="logo">
           <img src="{{url_for('static', filename='img/Logo.svg')}}" alt="CloudExp">
-          <a href="/">CloudExp</a></div>
-        <nav class="top-line__nav">
-          <ul>
-            {% for lang in languages_list %}
-              <li><a href="{{ url_for('get_language', language=lang.name_language) }}">{{lang.name_language}}</a></li>
-            {% endfor %}
-          </ul>
-        </nav>
+          <a href="/">CloudExp</a>
+        </div>
+        {% if languages_list %}
+          <nav class="top-line__nav">
+            <ul>
+              {% for lang in languages_list %}
+                <li><a href="{{ url_for('get_language', language=lang.name_language) }}">{{lang.name_language}}</a></li>
+              {% endfor %}
+            </ul>
+          </nav>
+        {% endif %}
         <ul class="top-line__auth-btns">
           {% if current_user.is_authenticated %}
             {% if current_user.privilages == 'is_admin' %}

@@ -837,7 +837,8 @@ input {
 }
 
 .admin-panel-main {
-    margin-top: 65px
+    margin-top: 65px;
+    min-height: 65vh;
 }
 
 .admin-panel-main__enter {
@@ -1354,7 +1355,7 @@ input {
 }
 
 .form-submit {
-    margin: 5px 0;
+    margin: 0 5px 15px 5px;;
     background-color: #4160EF;
     height: auto;
     width: auto;

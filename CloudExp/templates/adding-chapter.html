@@ -17,8 +17,8 @@
                     {% endfor %}
                 {% endif %}
                     {{ form.name_part(class='form-input', placeholder='Название части', value=part)}}
-                    {{ form.name_chapter(class='form-input', placeholder="Название главы")}}
-                    {{ form.text_chapter(class='form-textarea', placeholder="Текст главы")}}
+                    {{ form.name_chapter(class='form-input', placeholder="Название части")}}
+                    {{ form.text_chapter(class='form-textarea', placeholder="Текст части")}}
             </fieldset>
             {{form.submit(class='form-submit')}}
         </form>
