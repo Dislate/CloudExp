@@ -48,4 +48,5 @@ target/
 
 .idea/
 
+# my testconfig
 /CloudExp/myconfig.json

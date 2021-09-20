@@ -75,8 +75,8 @@ class Chapter(db.Model):
 
     def get_absolute_url(self):
         return url_for('get_chapter', language=self.part.language.name_language,
-                         name_part=self.part.name_part,
-                         name_chapter=self.name_chapter)
+                       name_part=self.part.name_part,
+                       name_chapter=self.name_chapter)
 
     def __repr__(self):
         return f"<chapters('{self.id_chapter}', '{self.part_id}', '{self.name_chapter}', '{self.text_chapter}')>"

@@ -82,6 +82,7 @@ def update_chapter_tasks():
         if id_current_chapter:
             current_chapter = Chapter.query.filter_by(id_chapter=id_current_chapter).first()
 
+        # updating data about task for current chapter
         text_chapter = request.form['text_chapter']
         current_chapter.text_chapter = text_chapter
         for index, task in enumerate(current_chapter.task_list):
