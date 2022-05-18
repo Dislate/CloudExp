@@ -18,9 +18,9 @@
         <ul class="mobile-nav__auth-btns grid">
             {% if current_user.is_authenticated %}
                 {% if current_user.privilages == 'is_admin' %}
-                    <li><a href="{{url_for('admin_panel')}} ">Привет, Админ!</a></li>
+                    <li><a href="{{url_for('admin_panel')}} ">Управление контентом</a></li>
                 {% endif%}
-                <li><a href=" {{url_for('logout')}} ">Log Out</a></li>
+                <li><a href=" {{url_for('logout')}} ">Выход</a></li>
             {% else %}
                 {% for i in [[url_for('signup'), "Регистрация"], [url_for('signin'), "Вход"]] %}
                 <li><a href="{{i[0]}}">{{i[1]}}</a></li>
@@ -44,9 +44,9 @@
             <ul class="top-line__auth-btns">
                 {% if current_user.is_authenticated %}
                     {% if current_user.privilages == 'is_admin' %}
-                        <li><a href="{{url_for('admin_panel')}}">Привет, Админ!</a></li>
+                        <li><a href="{{url_for('admin_panel')}}">Управление контентом</a></li>
                     {% endif%}
-                    <li><a href=" {{url_for('logout')}} ">Log Out</a></li>
+                    <li><a href=" {{url_for('logout')}} ">Выход</a></li>
                 {% else %}
                     {% for i in [[url_for('signup'), "Регистрация"], [url_for('signin'), "Вход"]] %}
                     <li><a href="{{i[0]}}">{{i[1]}}</a></li>
