@@ -1,4 +1,3 @@
-from os.path import dirname
 from datetime import timedelta
 from sqlalchemy import MetaData
 from flask import Flask

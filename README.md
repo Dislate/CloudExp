@@ -22,7 +22,7 @@ and etc.
 * First setting for project
 ````bash
 docker exec -it cloudexp_backend_1 sh
-docker flask start create_db
-docker flask start create_superuser yourlogin yourpassword youremail
+flask start create_db
+flask start create_superuser yourlogin yourpassword youremail
 ````
 * So you can to see how the project is working, just open in browser `127.0.0.1`

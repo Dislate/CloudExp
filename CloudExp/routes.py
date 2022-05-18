@@ -79,7 +79,6 @@ def update_chapter_tasks():
     if request.method == 'POST':
         id_current_chapter = request.args.get('data_input_chapter', type=int)
 
-        # get chapter which you will be work
         current_chapter = Chapter.query.first()
         if id_current_chapter:
             current_chapter = Chapter.query.filter_by(id_chapter=id_current_chapter).first()
