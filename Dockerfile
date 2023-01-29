@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.7-alpine
 
 EXPOSE 5000
 
@@ -18,5 +18,5 @@ COPY . .
 
 ENV FLASK_APP=run.py
 
-ENTRYPOINT ["flask"]
-CMD ["run", "--host=0.0.0.0"]
+ENTRYPOINT ["gunicorn"]
+CMD ["--workers=3", "app:run"]
