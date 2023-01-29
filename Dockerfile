@@ -4,6 +4,9 @@ EXPOSE 5000
 
 WORKDIR /CloudExp
 
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 RUN apk update \
     && apk add --no-cache mariadb-dev linux-headers libffi-dev gcc musl-dev openssl-dev cargo \
     && apk add python3-dev
@@ -18,5 +21,3 @@ COPY . .
 
 ENV FLASK_APP=run.py
 
-ENTRYPOINT ["gunicorn"]
-CMD ["--workers=3", "app:run"]

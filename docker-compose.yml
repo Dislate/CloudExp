@@ -5,10 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: gunicorn --bind 0.0.0.0:5000 run:app
     volumes:
-      - .:/app
-    ports:
-      - 80:5000
+      - static_volume:/root/CloudExp/CloudExp/static
+    expose:
+      - 5000
     depends_on:
       - db
 
@@ -25,5 +26,15 @@ services:
     ports:
       - 3300:3306
 
+  nginx:
+    build: ./services/nginx
+    volumes:
+      - static_volume:/root/CloudExp/CloudExp/static
+    ports:
+      - 1337:80
+    depends_on:
+      - backend
+
 volumes:
   db_data:
+  static_volume:
